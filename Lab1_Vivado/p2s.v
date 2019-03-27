@@ -1,12 +1,12 @@
 // Author: Jiang Zengkai
 // Date: 2019.3.26
-// Version: 1.2
+// Version: 2.1.0
 
 module p2s#(
-    parameter DATA_BITS = 16)(
+    parameter WIDTH = 16)(
     input wire clk,
     input wire sync,
-    input wire [DATA_BITS-1:0] data,
+    input wire [WIDTH-1:0] data,
     output wire sclk,
     output wire sclr,
     output reg sout,
@@ -25,12 +25,12 @@ module p2s#(
         sample <= {sample[0], sync};
     end
 
-    reg [DATA_BITS:0] buffer;
-    wire done = &buffer[DATA_BITS-1:0];
+    reg [WIDTH:0] buffer;
+    wire done = &buffer[WIDTH-1:0];
     always @ (posedge clk) begin
         case (state)
             START: buffer <= {data, 1'b0};
-            SEND: buffer <= {buffer[DATA_BITS-1:0], 1'b1};
+            SEND: buffer <= {buffer[WIDTH-1:0], 1'b1};
             default: buffer <= buffer;
         endcase
     end
@@ -49,7 +49,7 @@ module p2s#(
     end
     
     always @ (posedge clk) begin
-        sout <= buffer[DATA_BITS];
+        sout <= buffer[WIDTH];
     end
     assign sclk = clk & (state == SEND || state == FINISH);
     assign sclr = 1'b1;

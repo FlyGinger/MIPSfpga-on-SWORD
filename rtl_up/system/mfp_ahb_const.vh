@@ -4,13 +4,17 @@
 // Verilog include file with AHB definitions
 // 
 
+// Modified by Zengkai Jiang
+// Date: 2019.3.27
+// Version: 2.1.0
+
 //---------------------------------------------------
 // Physical bit-width of memory-mapped I/O interfaces
 //---------------------------------------------------
 `define MFP_N_LED             16
 `define MFP_N_SW              16
 `define MFP_N_PB              5
-
+`define MFP_N_7SEG            32
 
 //---------------------------------------------------
 // Memory-mapped I/O addresses
@@ -22,6 +26,7 @@
 `define H_LED_IONUM   			(4'h0)
 `define H_SW_IONUM  			(4'h1)
 `define H_PB_IONUM  			(4'h2)
+`define H_7SEG_IONUM            (4'h3)
 
 //---------------------------------------------------
 // RAM addresses

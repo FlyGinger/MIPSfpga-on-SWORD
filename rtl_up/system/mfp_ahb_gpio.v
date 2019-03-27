@@ -3,6 +3,9 @@
 // General-purpose I/O module for Altera's DE2-115 and 
 // Digilent's (Xilinx) Nexys4-DDR board
 
+// Modified by Zengkai Jiang
+// Date: 2019.3.27
+// Version: 2.1.0
 
 `include "mfp_ahb_const.vh"
 
@@ -19,7 +22,8 @@ module mfp_ahb_gpio(
 // memory-mapped I/O
     input      [`MFP_N_SW-1  :0] IO_Switch,
     input      [`MFP_N_PB-1  :0] IO_PB,
-    output reg [`MFP_N_LED-1 :0] IO_LED
+    output reg [`MFP_N_LED-1 :0] IO_LED,
+    output reg [`MFP_N_7SEG-1:0] IO_7SEG
 );
 
   reg  [3:0]  HADDR_d;
@@ -42,10 +46,12 @@ module mfp_ahb_gpio(
 
     always @(posedge HCLK or negedge HRESETn)
        if (~HRESETn) begin
-         IO_LED <= `MFP_N_LED'b0;  
+         IO_LED <= `MFP_N_LED'b0;
+         IO_7SEG <= `MFP_N_7SEG'b0;  
        end else if (we)
          case (HADDR_d)
            `H_LED_IONUM: IO_LED <= HWDATA[`MFP_N_LED-1:0];
+           `H_7SEG_IONUM: IO_7SEG <= HWDATA[`MFP_N_7SEG-1:0];
          endcase
     
 	always @(posedge HCLK or negedge HRESETn)
@@ -55,6 +61,8 @@ module mfp_ahb_gpio(
 	     case (HADDR)
            `H_SW_IONUM: HRDATA <= { {32 - `MFP_N_SW {1'b0}}, IO_Switch };
            `H_PB_IONUM: HRDATA <= { {32 - `MFP_N_PB {1'b0}}, IO_PB };
+           `H_LED_IONUM: HRDATA <= { {32 - `MFP_N_LED {1'b0}}, IO_PB };
+           `H_7SEG_IONUM: HRDATA <= { {32 - `MFP_N_7SEG {1'b0}}, IO_PB };
             default:    HRDATA <= 32'h00000000;
          endcase
 		 

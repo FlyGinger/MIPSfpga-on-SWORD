@@ -1,6 +1,6 @@
 // Author: Jiang Zengkai
 // Date: 2019.3.26
-// Version: 1.1
+// Version: 2.1.0
 
 `include "mfp_ahb_const.vh"
 
@@ -17,9 +17,16 @@ module mfp_sword(
     // LEDs
     output LED_CLK,
     output LED_DAT,
-    output LED_CLR,
     output LED_EN,
+    output LED_CLR,
     output [7:0] LED_ARDUINO,
+    // 7-segment LEDs
+    output SEG_CLK,
+    output SEG_DAT,
+    output SEG_EN,
+    output SEG_CLR,
+    output [3:0] AN,
+    output [7:0] SEG,
     // Pmod
     inout [8:1] JB,
     // UART
@@ -30,16 +37,12 @@ module mfp_sword(
     wire clk_out;
     wire [31:0] clk;
     wire tck_in, tck;
-    
     IBUF IBUF1(.O(tck_in),.I(JB[4]));
-    
     BUFG BUFG1(.O(tck), .I(tck_in));
-    
     clk_wiz_0 clk_wiz_0(
         .clk_in1_p(CLK_200M_P),
         .clk_in1_n(CLK_200M_N),
         .clk_out1(clk_out));
-    
     clk_div clk_div(
         .clk(clk_out),
         .clk_div(clk));
@@ -63,6 +66,21 @@ module mfp_sword(
         .sen(LED_EN));
     
     
+    // 7-segment LEDs
+    wire [`MFP_N_7SEG-1:0] SEG7;
+    io_7seg io_7seg(
+        .clk(clk_out),
+        .sync(clk[10]),
+        .scan(clk[19:18]),
+        .data(SEG7),
+        .seg_clk(SEG_CLK),
+        .seg_clr(SEG_CLR),
+        .seg_dat(SEG_DAT),
+        .seg_en(SEG_EN),
+        .an(AN),
+        .seg(SEG));
+    
+    
     // main system
     mfp_sys mfp_sys(
         .SI_Reset_N(CPU_RESETN),
@@ -82,7 +100,9 @@ module mfp_sword(
         .IO_Switch(SW),
         .IO_PB(BTN),
         .IO_LED(LED),
+        .IO_7SEG(SEG7),
         .UART_RX(UART_TXD_IN));
+
 
 endmodule
 

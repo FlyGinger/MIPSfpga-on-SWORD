@@ -1,6 +1,6 @@
 // Author: Jiang Zengkai
 // Date: 2019.3.21
-// Version: 1.0
+// Version: 1.0.0
 
 module clk_div(
     input wire clk, // 50 MHz

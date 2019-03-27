@@ -4,28 +4,33 @@
 // the AHB-Lite bus. It also taps out the interface signals and 
 // initializes signals required by the core.
 
+// Modified by Zengkai Jiang
+// Date: 2019.3.27
+// Version: 2.1.0
+
 `include "m14k_const.vh"
 `include "mfp_ahb_const.vh"
 
 module mfp_sys(     
-                    input                   SI_Reset_N,
-                    input                   SI_ClkIn,
-                    output [31:0]           HADDR,
-                    output [31:0]           HRDATA,
-                    output [31:0]           HWDATA,
-                    output                  HWRITE,
-					output [2:0]            HSIZE,
-                    input                   EJ_TRST_N_probe,
-                    input                   EJ_TDI,
-                    output                  EJ_TDO,
-                    input                   EJ_TMS,
-                    input                   EJ_TCK,
-                    input                   SI_ColdReset_N,
-                    input                   EJ_DINT,
-                    input  [`MFP_N_SW-1 :0] IO_Switch,
-                    input  [`MFP_N_PB-1 :0] IO_PB,
-                    output [`MFP_N_LED-1:0] IO_LED,
-                    input                   UART_RX);
+                    input                    SI_Reset_N,
+                    input                    SI_ClkIn,
+                    output [31:0]            HADDR,
+                    output [31:0]            HRDATA,
+                    output [31:0]            HWDATA,
+                    output                   HWRITE,
+					output [2:0]             HSIZE,
+                    input                    EJ_TRST_N_probe,
+                    input                    EJ_TDI,
+                    output                   EJ_TDO,
+                    input                    EJ_TMS,
+                    input                    EJ_TCK,
+                    input                    SI_ColdReset_N,
+                    input                    EJ_DINT,
+                    input  [`MFP_N_SW-1 :0]  IO_Switch,
+                    input  [`MFP_N_PB-1 :0]  IO_PB,
+                    output [`MFP_N_LED-1:0]  IO_LED,
+                    output [`MFP_N_7SEG-1:0] IO_7SEG,
+                    input                    UART_RX);
 
 
 

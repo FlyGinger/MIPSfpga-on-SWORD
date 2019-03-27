@@ -1,6 +1,6 @@
 # Author: Jiang Zengkai
-# Date: 2019.3.21
-# Version: 1.0
+# Date: 2019.3.27
+# Version: 2.1.0
 
 # Clock and reset
 set_property -dict {PACKAGE_PIN AC18 IOSTANDARD LVDS} [get_ports CLK_200M_P]
@@ -40,8 +40,8 @@ set_property -dict {PACKAGE_PIN AF10 IOSTANDARD LVCMOS15} [get_ports {SW[15]}]
 # LEDs
 set_property -dict {PACKAGE_PIN N26 IOSTANDARD LVCMOS33} [get_ports LED_CLK]
 set_property -dict {PACKAGE_PIN M26 IOSTANDARD LVCMOS33} [get_ports LED_DAT]
-set_property -dict {PACKAGE_PIN N24 IOSTANDARD LVCMOS33} [get_ports LED_CLR]
-set_property -dict {PACKAGE_PIN R25 IOSTANDARD LVCMOS33} [get_ports LED_EN]
+set_property -dict {PACKAGE_PIN N24 IOSTANDARD LVCMOS33} [get_ports LED_EN]
+set_property -dict {PACKAGE_PIN R25 IOSTANDARD LVCMOS33} [get_ports LED_CLR]
 
 # LEDs on Arduino board
 set_property -dict {PACKAGE_PIN AF24 IOSTANDARD LVCMOS33} [get_ports {LED_ARDUINO[0]}]
@@ -52,6 +52,26 @@ set_property -dict {PACKAGE_PIN AA23 IOSTANDARD LVCMOS33} [get_ports {LED_ARDUIN
 set_property -dict {PACKAGE_PIN Y25  IOSTANDARD LVCMOS33} [get_ports {LED_ARDUINO[5]}]
 set_property -dict {PACKAGE_PIN AB26 IOSTANDARD LVCMOS33} [get_ports {LED_ARDUINO[6]}]
 set_property -dict {PACKAGE_PIN W23  IOSTANDARD LVCMOS33} [get_ports {LED_ARDUINO[7]}]
+
+# 7-segment LEDs
+set_property -dict {PACKAGE_PIN M24 IOSTANDARD LVCMOS33} [get_ports SEG_CLK]
+set_property -dict {PACKAGE_PIN L24 IOSTANDARD LVCMOS33} [get_ports SEG_DAT]
+set_property -dict {PACKAGE_PIN R18 IOSTANDARD LVCMOS33} [get_ports SEG_EN]
+set_property -dict {PACKAGE_PIN P19 IOSTANDARD LVCMOS33} [get_ports SEG_CLR]
+
+# 7-segment LEDs on Arduino board
+set_property -dict {PACKAGE_PIN AA22 IOSTANDARD LVCMOS33} [get_ports {SEG[7]}]
+set_property -dict {PACKAGE_PIN AC23 IOSTANDARD LVCMOS33} [get_ports {SEG[6]}]
+set_property -dict {PACKAGE_PIN AC24 IOSTANDARD LVCMOS33} [get_ports {SEG[5]}]
+set_property -dict {PACKAGE_PIN W20  IOSTANDARD LVCMOS33} [get_ports {SEG[4]}]
+set_property -dict {PACKAGE_PIN Y21  IOSTANDARD LVCMOS33} [get_ports {SEG[3]}]
+set_property -dict {PACKAGE_PIN AD23 IOSTANDARD LVCMOS33} [get_ports {SEG[2]}]
+set_property -dict {PACKAGE_PIN AD24 IOSTANDARD LVCMOS33} [get_ports {SEG[1]}]
+set_property -dict {PACKAGE_PIN AB22 IOSTANDARD LVCMOS33} [get_ports {SEG[0]}]
+set_property -dict {PACKAGE_PIN AD21 IOSTANDARD LVCMOS33} [get_ports {AN[3]}]
+set_property -dict {PACKAGE_PIN AC21 IOSTANDARD LVCMOS33} [get_ports {AN[2]}]
+set_property -dict {PACKAGE_PIN AB21 IOSTANDARD LVCMOS33} [get_ports {AN[1]}]
+set_property -dict {PACKAGE_PIN AC22 IOSTANDARD LVCMOS33} [get_ports {AN[0]}]
 
 # UART
 set_property -dict {PACKAGE_PIN L25 IOSTANDARD LVCMOS33 PULLUP true} [get_ports UART_TXD_IN]

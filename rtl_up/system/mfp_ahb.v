@@ -7,6 +7,10 @@
 // The module includes an address decoder and multiplexer (for 
 // selecting which slave module produces HRDATA).
 
+// Modified by Zengkai Jiang
+// Date: 2019.3.27
+// Version: 2.1.0
+
 `include "mfp_ahb_const.vh"
 
 
@@ -30,7 +34,8 @@ module mfp_ahb
 // memory-mapped I/O
     input      [`MFP_N_SW-1 :0] IO_Switch,
     input      [`MFP_N_PB-1 :0] IO_PB,
-    output     [`MFP_N_LED-1:0] IO_LED    
+    output     [`MFP_N_LED-1:0] IO_LED,
+    output     [`MFP_N_7SEG-1:0] IO_7SEG
 );
 
 
@@ -53,7 +58,7 @@ module mfp_ahb
                               HTRANS, HWDATA, HWRITE, HRDATA1, HSEL[1]);
   // Module 2 - GPIO
   mfp_ahb_gpio mfp_ahb_gpio(HCLK, HRESETn, HADDR[5:2], HTRANS, HWDATA, HWRITE, HSEL[2], 
-                            HRDATA2, IO_Switch, IO_PB, IO_LED);
+                            HRDATA2, IO_Switch, IO_PB, IO_LED, IO_7SEG);
   
 
   ahb_decoder ahb_decoder(HADDR, HSEL);
