@@ -18,7 +18,7 @@
 `define MFP_N_ALED            8
 `define MFP_N_A7SEG           16
 `define MFP_N_A7SEGE          16
-`define MFP_N_ABUZ            1
+`define MFP_N_ABUZ            32
 `define MFP_N_3LED            6
 
 //---------------------------------------------------

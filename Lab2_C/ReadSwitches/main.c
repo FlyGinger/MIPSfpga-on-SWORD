@@ -1,10 +1,3 @@
-/*
- * main.c for the MIPSfpga core running on Nexys4 DDR board.
- *
- * This program:
- *   (1) reads the switches on the Nexys4 DDR board and 
- *   (2) flashes the value of the switches on the LEDs
- */
 #include "mfp_io.h"
 
 void delay();

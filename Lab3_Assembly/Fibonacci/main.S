@@ -1,14 +1,3 @@
-/*
- * main.S for microAptiv_UP MIPS core running on the Nexys4 DDR
- * FPGA target board
- *
- * Description:
- * Reads the switches on the FPGA board and writes 
- * the values to the LEDs. 
- *
- * This code uses function calls to read the switches and write the LEDs
- */
-
 # $12 = address of switches, $13 = address offset of switches
 # $10 = switch values 
 .globl main

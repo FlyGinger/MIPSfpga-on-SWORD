@@ -53,7 +53,13 @@ module mfp_ahb_gpio(
     always @(posedge HCLK or negedge HRESETn)
        if (~HRESETn) begin
          IO_LED <= `MFP_N_LED'b0;
-         IO_7SEG <= `MFP_N_7SEG'b0;  
+         IO_7SEG <= `MFP_N_7SEG'b0;
+         IO_7SEGE <= `MFP_N_7SEGE'b0;
+         IO_ALED <= `MFP_N_ALED'b0;
+         IO_A7SEG <= `MFP_N_A7SEG'b0;
+         IO_A7SEGE <= `MFP_N_A7SEGE'b0;
+         IO_ABUZ <= `MFP_N_ABUZ'b0;
+         IO_3LED <= `MFP_N_3LED'b0;
        end else if (we)
          case (HADDR_d)
            `H_LED_IONUM: IO_LED <= HWDATA[`MFP_N_LED-1:0];
@@ -63,7 +69,7 @@ module mfp_ahb_gpio(
            `H_A7SEG_IONUM: IO_A7SEG <= HWDATA[`MFP_N_A7SEG-1:0];
            `H_A7SEGE_IONUM: IO_A7SEGE <= HWDATA[`MFP_N_A7SEGE-1:0];
            `H_ABUZ_IONUM: IO_ABUZ <= HWDATA[`MFP_N_ABUZ-1:0];
-           `H_3LED_IONUM: IO_LED <= HWDATA[`MFP_N_3LED-1:0];
+           `H_3LED_IONUM: IO_3LED <= HWDATA[`MFP_N_3LED-1:0];
          endcase
     
     // read
