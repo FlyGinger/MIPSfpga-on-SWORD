@@ -5,31 +5,37 @@
 // initializes signals required by the core.
 
 // Modified by Zengkai Jiang
-// Date: 2019.3.27
+// Date: 2019.3.28
 
 `include "m14k_const.vh"
 `include "mfp_ahb_const.vh"
 
 module mfp_sys(     
-                    input                    SI_Reset_N,
-                    input                    SI_ClkIn,
-                    output [31:0]            HADDR,
-                    output [31:0]            HRDATA,
-                    output [31:0]            HWDATA,
-                    output                   HWRITE,
-					output [2:0]             HSIZE,
-                    input                    EJ_TRST_N_probe,
-                    input                    EJ_TDI,
-                    output                   EJ_TDO,
-                    input                    EJ_TMS,
-                    input                    EJ_TCK,
-                    input                    SI_ColdReset_N,
-                    input                    EJ_DINT,
-                    input  [`MFP_N_SW-1 :0]  IO_Switch,
-                    input  [`MFP_N_PB-1 :0]  IO_PB,
-                    output [`MFP_N_LED-1:0]  IO_LED,
-                    output [`MFP_N_7SEG-1:0] IO_7SEG,
-                    input                    UART_RX);
+                    input                      SI_Reset_N,
+                    input                      SI_ClkIn,
+                    output [31:0]              HADDR,
+                    output [31:0]              HRDATA,
+                    output [31:0]              HWDATA,
+                    output                     HWRITE,
+					output [2:0]               HSIZE,
+                    input                      EJ_TRST_N_probe,
+                    input                      EJ_TDI,
+                    output                     EJ_TDO,
+                    input                      EJ_TMS,
+                    input                      EJ_TCK,
+                    input                      SI_ColdReset_N,
+                    input                      EJ_DINT,
+                    input  [`MFP_N_SW-1 :0]    IO_Switch,
+                    input  [`MFP_N_PB-1 :0]    IO_PB,
+                    output [`MFP_N_LED-1:0]    IO_LED,
+                    output [`MFP_N_7SEG-1:0]   IO_7SEG,
+                    output [`MFP_N_7SEGE-1 :0] IO_7SEGE,
+                    output [`MFP_N_ALED-1  :0] IO_ALED,
+                    output [`MFP_N_A7SEG-1 :0] IO_A7SEG,
+                    output [`MFP_N_A7SEGE-1:0] IO_A7SEGE,
+                    output [`MFP_N_ABUZ-1  :0] IO_ABUZ,
+                    output [`MFP_N_3LED-1  :0] IO_3LED,
+                    input                      UART_RX);
 
 
 
@@ -306,6 +312,12 @@ module mfp_sys(
         .IO_PB                  (   IO_PB                   ),
         .IO_LED                 (   IO_LED                  ),
         .IO_7SEG                (   IO_7SEG                 ),
+        .IO_7SEGE               (   IO_7SEGE                ),
+        .IO_ALED                (   IO_ALED                 ),
+        .IO_A7SEG               (   IO_A7SEG                ),
+        .IO_A7SEGE              (   IO_A7SEGE               ),
+        .IO_ABUZ                (   IO_ABUZ                 ),
+        .IO_3LED                (   IO_3LED                 ),
         .UART_RX                (   UART_RX                 ), 
         .MFP_Reset_serialload   (   MFP_Reset_serialload    )
     );

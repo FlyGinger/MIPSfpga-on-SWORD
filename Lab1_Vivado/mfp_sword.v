@@ -1,5 +1,5 @@
 // Author: Jiang Zengkai
-// Date: 2019.3.21
+// Date: 2019.3.28
 
 `include "mfp_ahb_const.vh"
 
@@ -8,24 +8,30 @@ module mfp_sword(
     input CLK_200M_P,
     input CLK_200M_N,
     input CPU_RESETN,
-    // Button
-    input [4:0] BTNY,
-    output [4:0] BTNX,
-    // Switches
-    input [`MFP_N_SW-1:0] SW,
     // LEDs
     output LED_CLK,
     output LED_DAT,
     output LED_EN,
     output LED_CLR,
-    output [7:0] LED_ARDUINO,
+    // Switches
+    input [15:0] SW,
+    // Button
+    input [4:0] BTNY,
+    output [4:0] BTNX,
     // 7-segment LEDs
     output SEG_CLK,
     output SEG_DAT,
     output SEG_EN,
     output SEG_CLR,
+    // LEDs on Arduino board
+    output [7:0] ALED,
+    // 7-segment LEDs on Arduino board
     output [3:0] AN,
     output [7:0] SEG,
+    // Buzzer on Arduino board
+    output ABUZ,
+    // 3 color LED
+    output [5:0] LED3,
     // Pmod
     inout [8:1] JB,
     // UART
@@ -46,16 +52,10 @@ module mfp_sword(
         .clk(clk_out),
         .clk_div(clk));
 
-    
-    // Button
-    wire [4:0] BTN = ~BTNY;
-    assign BTNX = 5'b0;
-    
-    
+
     // LEDs
-    wire [`MFP_N_LED-1:0] LED;
-    assign LED_ARDUINO = LED[7:0];
-    p2s io_led(
+    wire [15:0] LED;
+    p2s led(
         .clk(clk_out),
         .sync(clk[10]),
         .data(LED),
@@ -65,20 +65,45 @@ module mfp_sword(
         .sen(LED_EN));
     
     
+    // Button
+    wire [24:0] BTN;
+    io_pb pushbutton(
+        .clk(clk[17]),
+        .btny(BTNY),
+        .btnx(BTNX),
+        .btn(BTN));
+    
+    
     // 7-segment LEDs
-    wire [`MFP_N_7SEG-1:0] SEG7;
-    io_7seg io_7seg(
+    wire [31:0] SEG7;
+    wire [31:0] SEG7E;
+    io_7seg seg7led(
         .clk(clk_out),
+        .flash(clk[26]),
         .sync(clk[10]),
-        .scan(clk[19:18]),
-        .data(SEG7),
+        .data({SEG7E, SEG7}),
         .seg_clk(SEG_CLK),
         .seg_clr(SEG_CLR),
         .seg_dat(SEG_DAT),
-        .seg_en(SEG_EN),
+        .seg_en(SEG_EN));
+    
+
+    // 7-segment LEDs on Arduino board
+    wire [15:0] A7SEGE;
+    wire [15:0] A7SEG;
+    io_a7seg arduino_seg7led(
+        .clk(clk_out),
+        .flash(clk[26]),
+        .scan(clk[19:18]),
+        .data({A7SEGE, A7SEG}),
         .an(AN),
         .seg(SEG));
+
     
+    // 3 color LED
+    wire [5:0] LED3_rev;
+    assign LED3 = ~LED3_rev;
+
     
     // main system
     mfp_sys mfp_sys(
@@ -100,6 +125,12 @@ module mfp_sword(
         .IO_PB(BTN),
         .IO_LED(LED),
         .IO_7SEG(SEG7),
+        .IO_7SEGE(SEG7E),
+        .IO_ALED(ALED),
+        .IO_A7SEG(A7SEG),
+        .IO_A7SEGE(A7SEGE),
+        .IO_ABUZ(ABUZ),
+        .IO_3LED(LED3_rev),
         .UART_RX(UART_TXD_IN));
 
 

@@ -1,5 +1,5 @@
 // Modified by Zengkai Jiang
-// Date: 2019.3.27
+// Date: 2019.3.28
 
 `include "mfp_ahb_const.vh"
 
@@ -20,10 +20,16 @@ module mfp_ahb_withloader (
     input         SI_Endian,
 
 	// memory-mapped I/O
-    input      [`MFP_N_SW-1 : 0] IO_Switch,
-    input      [`MFP_N_PB-1 : 0] IO_PB,
-    output     [`MFP_N_LED-1: 0] IO_LED,
-    output     [`MFP_N_7SEG-1:0] IO_7SEG,
+    input      [`MFP_N_SW-1    :0] IO_Switch,
+    input      [`MFP_N_PB-1    :0] IO_PB,
+    output     [`MFP_N_LED-1   :0] IO_LED,
+    output     [`MFP_N_7SEG-1  :0] IO_7SEG,
+    output     [`MFP_N_7SEGE-1 :0] IO_7SEGE,
+    output     [`MFP_N_ALED-1  :0] IO_ALED,
+    output     [`MFP_N_A7SEG-1 :0] IO_A7SEG,
+    output     [`MFP_N_A7SEGE-1:0] IO_A7SEGE,
+    output     [`MFP_N_ABUZ-1  :0] IO_ABUZ,
+    output     [`MFP_N_3LED-1  :0] IO_3LED,
 
 	// for serial loading of memory using uart
     input         UART_RX,
@@ -126,7 +132,13 @@ module mfp_ahb_withloader (
         .IO_Switch        ( IO_Switch       ),
         .IO_PB            ( IO_PB           ),
         .IO_LED           ( IO_LED          ),
-        .IO_7SEG          ( IO_7SEG         )
+        .IO_7SEG          ( IO_7SEG         ),
+        .IO_7SEGE         ( IO_7SEGE        ),
+        .IO_ALED          ( IO_ALED         ),
+        .IO_A7SEG         ( IO_A7SEG        ),
+        .IO_A7SEGE        ( IO_A7SEGE       ),
+        .IO_ABUZ          ( IO_ABUZ         ),
+        .IO_3LED          ( IO_3LED         )
     );
 
 endmodule
