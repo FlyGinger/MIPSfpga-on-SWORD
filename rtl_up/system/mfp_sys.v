@@ -6,7 +6,6 @@
 
 // Modified by Zengkai Jiang
 // Date: 2019.3.27
-// Version: 2.1.0
 
 `include "m14k_const.vh"
 `include "mfp_ahb_const.vh"
@@ -306,6 +305,7 @@ module mfp_sys(
         .IO_Switch              (   IO_Switch               ),
         .IO_PB                  (   IO_PB                   ),
         .IO_LED                 (   IO_LED                  ),
+        .IO_7SEG                (   IO_7SEG                 ),
         .UART_RX                (   UART_RX                 ), 
         .MFP_Reset_serialload   (   MFP_Reset_serialload    )
     );

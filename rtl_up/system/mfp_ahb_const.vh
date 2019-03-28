@@ -6,7 +6,6 @@
 
 // Modified by Zengkai Jiang
 // Date: 2019.3.27
-// Version: 2.1.0
 
 //---------------------------------------------------
 // Physical bit-width of memory-mapped I/O interfaces

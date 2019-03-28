@@ -1,6 +1,5 @@
 # Author: Jiang Zengkai
-# Date: 2019.3.27
-# Version: 2.1.0
+# Date: 2019.3.21
 
 # Clock and reset
 set_property -dict {PACKAGE_PIN AC18 IOSTANDARD LVDS} [get_ports CLK_200M_P]

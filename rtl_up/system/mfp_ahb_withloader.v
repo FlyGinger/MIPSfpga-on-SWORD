@@ -1,6 +1,5 @@
 // Modified by Zengkai Jiang
 // Date: 2019.3.27
-// Version: 2.1.0
 
 `include "mfp_ahb_const.vh"
 
@@ -126,7 +125,8 @@ module mfp_ahb_withloader (
                                              
         .IO_Switch        ( IO_Switch       ),
         .IO_PB            ( IO_PB           ),
-        .IO_LED           ( IO_LED          )
+        .IO_LED           ( IO_LED          ),
+        .IO_7SEG          ( IO_7SEG         )
     );
 
 endmodule

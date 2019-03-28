@@ -1,6 +1,5 @@
 // Author: Jiang Zengkai
 // Date: 2019.3.27
-// Version: 2.1.0
 
 module io_7seg(
     input wire clk,

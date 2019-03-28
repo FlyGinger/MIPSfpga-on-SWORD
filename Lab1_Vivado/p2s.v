@@ -1,6 +1,5 @@
 // Author: Jiang Zengkai
-// Date: 2019.3.26
-// Version: 2.1.0
+// Date: 2019.3.21
 
 module p2s#(
     parameter WIDTH = 16)(

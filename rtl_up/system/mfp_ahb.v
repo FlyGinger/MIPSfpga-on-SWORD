@@ -9,7 +9,6 @@
 
 // Modified by Zengkai Jiang
 // Date: 2019.3.27
-// Version: 2.1.0
 
 `include "mfp_ahb_const.vh"
 
