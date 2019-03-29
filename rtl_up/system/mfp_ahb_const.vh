@@ -5,7 +5,7 @@
 // 
 
 // Modified by Zengkai Jiang
-// Date: 2019.3.28
+// Date: 2019.3.29
 
 //---------------------------------------------------
 // Physical bit-width of memory-mapped I/O interfaces
@@ -21,6 +21,8 @@
 `define MFP_N_ABUZ            32
 `define MFP_N_3LED            6
 
+`define MFP_N_MILLIS          32
+
 //---------------------------------------------------
 // Memory-mapped I/O addresses
 //---------------------------------------------------
@@ -35,6 +37,8 @@
 `define H_ABUZ_ADDR             (32'h1f800020)
 `define H_3LED_ADDR             (32'h1f800024)
 
+`define H_MILLIS_ADDR           (32'h1f800034)
+
 `define H_LED_IONUM   			(4'h0)
 `define H_SW_IONUM  			(4'h1)
 `define H_PB_IONUM  			(4'h2)
@@ -45,6 +49,8 @@
 `define H_A7SEGE_IONUM          (4'h7)
 `define H_ABUZ_IONUM            (4'h8)
 `define H_3LED_IONUM            (4'h9)
+
+`define H_MILLIS_IONUM          (4'hd)
 
 //---------------------------------------------------
 // RAM addresses

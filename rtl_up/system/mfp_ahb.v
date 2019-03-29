@@ -8,7 +8,7 @@
 // selecting which slave module produces HRDATA).
 
 // Modified by Zengkai Jiang
-// Date: 2019.3.28
+// Date: 2019.3.29
 
 `include "mfp_ahb_const.vh"
 
@@ -43,6 +43,10 @@ module mfp_ahb
     output     [`MFP_N_3LED-1  :0] IO_3LED
 );
 
+  // millisecond counter
+  wire [31:0] millis;
+  mfp_ahb_millis_counter mfp_ahb_millis_counter(
+    .clk(HCLK), .rstn(HRESETn), .millis(millis));
 
   wire [31:0] HRDATA2, HRDATA1, HRDATA0;
   wire [ 2:0] HSEL;
@@ -64,9 +68,8 @@ module mfp_ahb
   // Module 2 - GPIO
   mfp_ahb_gpio mfp_ahb_gpio(HCLK, HRESETn, HADDR[5:2], HTRANS, HWDATA, HWRITE, HSEL[2], 
                             HRDATA2, IO_Switch, IO_PB, IO_LED, IO_7SEG, IO_7SEGE,
-                            IO_ALED, IO_A7SEG, IO_A7SEGE, IO_ABUZ, IO_3LED);
+                            IO_ALED, IO_A7SEG, IO_A7SEGE, IO_ABUZ, IO_3LED, millis);
   
-
   ahb_decoder ahb_decoder(HADDR, HSEL);
   ahb_mux ahb_mux(HCLK, HSEL_d, HRDATA2, HRDATA1, HRDATA0, HRDATA);
 
@@ -103,3 +106,26 @@ module ahb_mux
       endcase
 endmodule
 
+module mfp_ahb_millis_counter(
+    input wire clk,
+    input wire rstn,
+    output reg [31:0] millis);
+    
+    reg [15:0] counter;
+    always @ (posedge clk) begin
+        if (~rstn) begin
+            counter <= 0;
+            millis <= 0;
+        end
+        else begin
+            if (counter == 'd50000) begin
+                counter <= 0;
+                millis <= millis + 1;
+            end
+            else begin
+                counter <= counter + 1;
+            end
+        end
+    end
+
+endmodule
