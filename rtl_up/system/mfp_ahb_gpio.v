@@ -28,7 +28,8 @@ module mfp_ahb_gpio(
     output reg [`MFP_N_A7SEG-1 :0] IO_A7SEG,
     output reg [`MFP_N_A7SEGE-1:0] IO_A7SEGE,
     output reg [`MFP_N_ABUZ-1  :0] IO_ABUZ,
-    output reg [`MFP_N_3LED-1  :0] IO_3LED
+    output reg [`MFP_N_3LED-1  :0] IO_3LED,
+    input      [`MFP_N_MILLIS-1:0] IO_MILLIS
 );
 
   reg  [3:0]  HADDR_d;
@@ -88,6 +89,7 @@ module mfp_ahb_gpio(
            `H_A7SEGE_IONUM: HRDATA <= { {32 - `MFP_N_A7SEGE {1'b0}}, IO_A7SEGE };
            `H_ABUZ_IONUM: HRDATA <= { {32 - `MFP_N_ABUZ {1'b0}}, IO_ABUZ };
            `H_3LED_IONUM: HRDATA <= { {32 - `MFP_N_3LED {1'b0}}, IO_3LED };
+           `H_MILLIS_IONUM: HRDATA <= { {32 - `MFP_N_MILLIS {1'b0}}, IO_MILLIS };
          endcase
 		 
 endmodule
