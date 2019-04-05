@@ -1,5 +1,5 @@
 // Author: Jiang Zengkai
-// Date: 2019.3.28
+// Date: 2019.4.4
 
 `include "mfp_ahb_const.vh"
 
@@ -56,8 +56,8 @@ module mfp_sword(
     // LEDs
     wire [15:0] LED;
     p2s led(
-        .clk(clk_out),
-        .sync(clk[10]),
+        .clk(clk[10]),
+        .sync(clk[18]),
         .data(LED),
         .sclk(LED_CLK),
         .sclr(LED_CLR),
@@ -78,9 +78,9 @@ module mfp_sword(
     wire [31:0] SEG7;
     wire [31:0] SEG7E;
     io_7seg seg7led(
-        .clk(clk_out),
+        .clk(clk[10]),
         .flash(clk[25]),
-        .sync(clk[10]),
+        .sync(clk[18]),
         .data({SEG7E, SEG7}),
         .seg_clk(SEG_CLK),
         .seg_clr(SEG_CLR),

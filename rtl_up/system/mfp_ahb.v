@@ -8,7 +8,7 @@
 // selecting which slave module produces HRDATA).
 
 // Modified by Zengkai Jiang
-// Date: 2019.3.29
+// Date: 2019.4.2
 
 `include "mfp_ahb_const.vh"
 
@@ -111,14 +111,14 @@ module mfp_ahb_millis_counter(
     input wire rstn,
     output reg [31:0] millis);
     
-    reg [15:0] counter;
+    reg [13:0] counter;
     always @ (posedge clk) begin
         if (~rstn) begin
             counter <= 0;
             millis <= 0;
         end
         else begin
-            if (counter == 'd50000) begin
+            if (counter == 'd12500) begin
                 counter <= 0;
                 millis <= millis + 1;
             end
