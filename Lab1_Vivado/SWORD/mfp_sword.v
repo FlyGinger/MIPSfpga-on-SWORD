@@ -1,5 +1,5 @@
 // Author: Jiang Zengkai
-// Date: 2019.4.4
+// Date: 2019.4.9
 
 `include "mfp_ahb_const.vh"
 
@@ -35,7 +35,13 @@ module mfp_sword(
     // Pmod
     inout [8:1] JB,
     // UART
-    input UART_TXD_IN);
+    input UART_TXD_IN,
+    // VGA
+    output VGA_HS,
+    output VGA_VS,
+    output [3:0] VGA_R,
+    output [3:0] VGA_G,
+    output [3:0] VGA_B);
     
     
     // Clock and reset
@@ -56,8 +62,8 @@ module mfp_sword(
     // LEDs
     wire [15:0] LED;
     p2s led(
-        .clk(clk[10]),
-        .sync(clk[18]),
+        .clk(clk_out),
+        .sync(clk[10]),
         .data(LED),
         .sclk(LED_CLK),
         .sclr(LED_CLR),
@@ -78,9 +84,9 @@ module mfp_sword(
     wire [31:0] SEG7;
     wire [31:0] SEG7E;
     io_7seg seg7led(
-        .clk(clk[10]),
+        .clk(clk_out),
         .flash(clk[25]),
-        .sync(clk[18]),
+        .sync(clk[10]),
         .data({SEG7E, SEG7}),
         .seg_clk(SEG_CLK),
         .seg_clr(SEG_CLR),
@@ -113,6 +119,25 @@ module mfp_sword(
         .halflen(BUZZER),
         .buzzer(ABUZ));
     
+
+    // VGA
+    wire [11:0] RGB;
+    wire [9:0] h_addr;
+    wire [8:0] v_addr;
+    wire [18:0] vga_addr = v_addr * 'd640 + h_addr;
+    io_vga io_vga(
+        .clk(clk[0]),
+        .clr(~CPU_RESETN),
+        .rgb(RGB),
+        .h_addr(h_addr),
+        .v_addr(v_addr),
+        .read(),
+        .VGA_HS(VGA_HS),
+        .VGA_VS(VGA_VS),
+        .VGA_R(VGA_R),
+        .VGA_G(VGA_G),
+        .VGA_B(VGA_B));
+    
     
     // main system
     mfp_sys mfp_sys(
@@ -140,7 +165,9 @@ module mfp_sword(
         .IO_A7SEGE(A7SEGE),
         .IO_ABUZ(BUZZER),
         .IO_3LED(LED3_REV),
-        .UART_RX(UART_TXD_IN));
+        .UART_RX(UART_TXD_IN),
+        .IO_VGA_ADDR(vga_addr),
+        .IO_VGA_DATA(RGB));
 
 
 endmodule

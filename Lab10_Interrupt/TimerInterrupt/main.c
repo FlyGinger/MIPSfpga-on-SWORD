@@ -5,8 +5,7 @@
 #include "mfp_io.h"
 #include <mips/cpu.h>
 
-volatile int n;
-#define INTERNAL 250000000
+#define INTERNAL 25000000
 
 void __attribute__((interrupt, keep_interrupts_masked))
 _mips_general_exception() {
@@ -21,10 +20,11 @@ _mips_general_exception() {
     }
     if (cause & CR_HINT0) // Checking whether interrupt 0 is pending
         MFP_7SEGLED++;
-    // else if (cause & CR_HINT1) {
-    //     MFP_7SEGLED++;
-    //     mips_setcount(0);
-    // }
+    else if (cause & CR_HINT1) {
+        mips_setcompare(INTERNAL);
+        MFP_7SEGLED++;
+        mips_setcount(0);
+    }
 }
 
 int main() {

@@ -5,7 +5,7 @@
 // initializes signals required by the core.
 
 // Modified by Zengkai Jiang
-// Date: 2019.4.4
+// Date: 2019.4.9
 
 `include "m14k_const.vh"
 `include "mfp_ahb_const.vh"
@@ -35,7 +35,9 @@ module mfp_sys(
                     output [`MFP_N_A7SEGE-1:0] IO_A7SEGE,
                     output [`MFP_N_ABUZ-1  :0] IO_ABUZ,
                     output [`MFP_N_3LED-1  :0] IO_3LED,
-                    input                      UART_RX);
+                    input                      UART_RX,
+                    input  [18             :0] IO_VGA_ADDR,
+                    output [11             :0] IO_VGA_DATA);
 
 
 
@@ -318,6 +320,8 @@ module mfp_sys(
         .IO_ABUZ                (   IO_ABUZ                 ),
         .IO_3LED                (   IO_3LED                 ),
         .UART_RX                (   UART_RX                 ),
+        .IO_VGA_ADDR            (   IO_VGA_ADDR             ),
+        .IO_VGA_DATA            (   IO_VGA_DATA             ),
         .MFP_Reset_serialload   (   MFP_Reset_serialload    )
     );
 
@@ -339,7 +343,7 @@ module mfp_sys(
     assign SI_EISS = 0;
 	assign SI_Int = IO_Switch[0] ? {6'b0, SI_TimerInt, |IO_PB} : 8'b0;  // Ext. Interrupt pins
 	assign SI_Offset = 0;
-	assign SI_IPTI = 'd3;	 // TimerInt connection
+	assign SI_IPTI = IO_Switch[0] ? 'd3 : 0;	 // TimerInt connection
 	assign SI_CPUNum = 0;	         // EBase CPU number
 	assign SI_Endian = 0;	         // Base endianess: 1=big
 	assign SI_MergeMode = 0;	

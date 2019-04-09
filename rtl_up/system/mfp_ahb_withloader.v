@@ -1,5 +1,5 @@
 // Modified by Zengkai Jiang
-// Date: 2019.4.2
+// Date: 2019.4.9
 
 `include "mfp_ahb_const.vh"
 
@@ -30,6 +30,8 @@ module mfp_ahb_withloader (
     output     [`MFP_N_A7SEGE-1:0] IO_A7SEGE,
     output     [`MFP_N_ABUZ-1  :0] IO_ABUZ,
     output     [`MFP_N_3LED-1  :0] IO_3LED,
+    input      [18             :0] IO_VGA_ADDR,
+    output     [11             :0] IO_VGA_DATA,
     
 	// for serial loading of memory using uart
     input         UART_RX,
@@ -138,7 +140,9 @@ module mfp_ahb_withloader (
         .IO_A7SEG         ( IO_A7SEG        ),
         .IO_A7SEGE        ( IO_A7SEGE       ),
         .IO_ABUZ          ( IO_ABUZ         ),
-        .IO_3LED          ( IO_3LED         )
+        .IO_3LED          ( IO_3LED         ),
+        .IO_VGA_ADDR      ( IO_VGA_ADDR     ),
+        .IO_VGA_DATA      ( IO_VGA_DATA     )
     );
 
 endmodule

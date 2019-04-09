@@ -12,6 +12,7 @@
 #define MFP_ABUZ_ADDR           0xBF800020
 #define MFP_3LED_ADDR           0xBF800024
 #define MFP_MILLIS_ADDR         0xBF800034
+#define MFP_VGA_ADDR            0xBF400000
 
 #define MFP_LEDS                (* (volatile unsigned *) MFP_LEDS_ADDR)
 #define MFP_SWITCHES            (* (volatile unsigned *) MFP_SWITCHES_ADDR)

@@ -5,7 +5,7 @@
 // 
 
 // Modified by Zengkai Jiang
-// Date: 2019.3.29
+// Date: 2019.4.9
 
 //---------------------------------------------------
 // Physical bit-width of memory-mapped I/O interfaces
@@ -57,12 +57,15 @@
 //---------------------------------------------------
 `define H_RAM_RESET_ADDR 		(32'h1fc?????)
 `define H_RAM_ADDR	 		    (32'h0???????)
+`define H_RAM_V_ADDR            (32'h1f4?????)
 `define H_RAM_RESET_ADDR_WIDTH  (8) 
 `define H_RAM_ADDR_WIDTH		(16) 
+`define H_RAM_V_ADDR_WIDTH      (19)
 
 `define H_RAM_RESET_ADDR_Match  (7'h7f)
 `define H_RAM_ADDR_Match 		(1'b0)
 `define H_LED_ADDR_Match		(7'h7e)
+`define H_RAM_V_ADDR_Match      (7'h7d)
 
 //---------------------------------------------------
 // AHB-Lite values used by MIPSfpga core
