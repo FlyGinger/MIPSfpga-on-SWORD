@@ -4,6 +4,7 @@
 
 #include "mfp_io.h"
 #include <mips/cpu.h>
+#include <mips/m32c0.h>
 
 void __attribute__((interrupt, keep_interrupts_masked))
 _mips_general_exception() {

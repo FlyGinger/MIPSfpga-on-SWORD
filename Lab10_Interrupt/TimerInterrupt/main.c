@@ -4,6 +4,7 @@
 
 #include "mfp_io.h"
 #include <mips/cpu.h>
+#include <mips/m32c0.h>
 
 #define INTERNAL 25000000
 
