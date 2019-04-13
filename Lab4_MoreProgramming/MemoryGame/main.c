@@ -1,3 +1,6 @@
+// Author: Jiang Zengkai
+// Date: 2019.3.29
+
 #include "mfp_io.h"
 #include <stdlib.h>
 #define ANTI_JITTER 100000
@@ -8,13 +11,9 @@ void generate_random_sequence(unsigned char *sequence);
 void show_sequence(unsigned char *sequence);
 int quiz(unsigned char *sequence);
 
-//------------------
-// main()
-//------------------
 int main() {
     unsigned char sequence[8];
     srand(0x12345678);
-
     while (1) {
         read_button(); // push any key to start
         generate_random_sequence(sequence);
@@ -22,7 +21,6 @@ int main() {
         MFP_LEDS = 0xffff;
         MFP_LEDS = quiz(sequence);
     }
-
     return 0;
 }
 

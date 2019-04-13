@@ -1,5 +1,5 @@
 // Author: Jiang Zengkai
-// Date: 2019.4.9
+// Date: 2019.4.13
 
 `include "mfp_ahb_const.vh"
 
@@ -41,7 +41,15 @@ module mfp_sword(
     output VGA_VS,
     output [3:0] VGA_R,
     output [3:0] VGA_G,
-    output [3:0] VGA_B);
+    output [3:0] VGA_B,
+    // SRAM
+    output [19:0] SRAM_ADDR,
+    output [2:0] SRAM_CE_N,
+    output [2:0] SRAM_OE_N,
+    output [2:0] SRAM_WE_N,
+    output [2:0] SRAM_UB_N,
+    output [2:0] SRAM_LB_N,
+    inout [47:0] SRAM_DATA);
     
     
     // Clock and reset
@@ -167,7 +175,14 @@ module mfp_sword(
         .IO_3LED(LED3_REV),
         .UART_RX(UART_TXD_IN),
         .IO_VGA_ADDR(vga_addr),
-        .IO_VGA_DATA(RGB));
+        .IO_VGA_DATA(RGB),
+        .SRAM_ADDR(SRAM_ADDR),
+        .SRAM_CE_N(SRAM_CE_N),
+        .SRAM_OE_N(SRAM_OE_N),
+        .SRAM_WE_N(SRAM_WE_N),
+        .SRAM_UB_N(SRAM_UB_N),
+        .SRAM_LB_N(SRAM_LB_N),
+        .SRAM_DATA(SRAM_DATA));
 
 
 endmodule

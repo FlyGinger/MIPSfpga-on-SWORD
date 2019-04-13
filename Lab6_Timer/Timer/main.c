@@ -1,14 +1,14 @@
-#include "mfp_io.h"
+// Author: Jiang Zengkai
+// Date: 2019.4.9
 
-//------------------
-// main()
-//------------------
+#include "mfp_io.h"
 
 void delay() {
     volatile int i = 100000;
     while (i-- > 0)
         ;
 }
+
 int main() {
     MFP_7SEGLEDEX = 0;
     int i = 0x5a5a5a5a;

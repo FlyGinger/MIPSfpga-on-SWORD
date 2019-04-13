@@ -1,10 +1,10 @@
+// Modified by Jiang Zengkai
+// Date: 2019.3.28
+
 // mfp_ahb_gpio.v
 //
 // General-purpose I/O module for Altera's DE2-115 and 
 // Digilent's (Xilinx) Nexys4-DDR board
-
-// Modified by Zengkai Jiang
-// Date: 2019.3.28
 
 `include "mfp_ahb_const.vh"
 

@@ -1,3 +1,6 @@
+# Author: Jiang Zengkai
+# Date: 2019.4.9
+
 import cv2
 import os
 

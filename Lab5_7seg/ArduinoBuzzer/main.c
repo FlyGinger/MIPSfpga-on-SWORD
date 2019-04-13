@@ -1,5 +1,7 @@
-#include "mfp_io.h"
+// Author: Jiang Zengkai
+// Date: 2019.3.29
 
+#include "mfp_io.h"
 #define ANTI_JITTER 1000000
 
 void delay();
@@ -12,14 +14,10 @@ void delay();
 #define A 56818
 #define B 50607
 
-//------------------
-// main()
-//------------------
 int main() {
 
     volatile unsigned int xiaoluohao[26] = {C, C, E, E, G, G, C, C, E, E, G, G,
                                             C, C, E, C, E, G, E, C, G, C, C, C};
-
     while (1) {
         delay(), delay(), delay(), delay(), delay(), delay();
         for (int i = 0; i < 26; i++) {
@@ -27,7 +25,6 @@ int main() {
             delay();
         }
     }
-
     return 0;
 }
 

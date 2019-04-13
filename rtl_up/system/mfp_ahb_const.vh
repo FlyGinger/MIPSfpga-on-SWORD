@@ -1,11 +1,11 @@
+// Modified by Jiang Zengkai
+// Date: 2019.4.13
+
 // 
 // mfp_ahb_const.vh
 //
 // Verilog include file with AHB definitions
 // 
-
-// Modified by Zengkai Jiang
-// Date: 2019.4.9
 
 //---------------------------------------------------
 // Physical bit-width of memory-mapped I/O interfaces
@@ -36,7 +36,6 @@
 `define H_A7SEGE_ADDR           (32'h1f80001c)
 `define H_ABUZ_ADDR             (32'h1f800020)
 `define H_3LED_ADDR             (32'h1f800024)
-
 `define H_MILLIS_ADDR           (32'h1f800034)
 
 `define H_LED_IONUM   			(4'h0)
@@ -49,7 +48,6 @@
 `define H_A7SEGE_IONUM          (4'h7)
 `define H_ABUZ_IONUM            (4'h8)
 `define H_3LED_IONUM            (4'h9)
-
 `define H_MILLIS_IONUM          (4'hd)
 
 //---------------------------------------------------
@@ -58,14 +56,18 @@
 `define H_RAM_RESET_ADDR 		(32'h1fc?????)
 `define H_RAM_ADDR	 		    (32'h0???????)
 `define H_RAM_V_ADDR            (32'h1f4?????)
+`define H_SRAM_ADDR             (32'h2???????)
+
 `define H_RAM_RESET_ADDR_WIDTH  (8) 
 `define H_RAM_ADDR_WIDTH		(16) 
 `define H_RAM_V_ADDR_WIDTH      (19)
+`define H_SRAM_ADDR_WIDTH       (22)
 
-`define H_RAM_RESET_ADDR_Match  (7'h7f)
-`define H_RAM_ADDR_Match 		(1'b0)
-`define H_LED_ADDR_Match		(7'h7e)
-`define H_RAM_V_ADDR_Match      (7'h7d)
+`define H_RAM_RESET_ADDR_Match  (10'b0001_1111_11)
+`define H_RAM_ADDR_Match 		(4'b0000)
+`define H_LED_ADDR_Match		(10'b0001_1111_10)
+`define H_RAM_V_ADDR_Match      (10'b0001_1111_01)
+`define H_SRAM_ADDR_Match       (4'b0010)
 
 //---------------------------------------------------
 // AHB-Lite values used by MIPSfpga core

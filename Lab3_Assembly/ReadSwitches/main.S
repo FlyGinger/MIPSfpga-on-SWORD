@@ -1,3 +1,6 @@
+# Author: Jiang Zengkai
+# Date: 2019.3.29
+
 # $12 = address of switches, $13 = address offset of switches
 # $10 = switch values 
 .globl main

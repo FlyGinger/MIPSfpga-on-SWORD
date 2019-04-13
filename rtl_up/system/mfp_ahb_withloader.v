@@ -1,5 +1,5 @@
-// Modified by Zengkai Jiang
-// Date: 2019.4.9
+// Modified by Jiang Zengkai
+// Date: 2019.4.13
 
 `include "mfp_ahb_const.vh"
 
@@ -35,6 +35,15 @@ module mfp_ahb_withloader (
     
 	// for serial loading of memory using uart
     input         UART_RX,
+
+    // SRAM
+    output [19:0] SRAM_ADDR,
+    output [2 :0] SRAM_CE_N,
+    output [2 :0] SRAM_OE_N,
+    output [2 :0] SRAM_WE_N,
+    output [2 :0] SRAM_UB_N,
+    output [2 :0] SRAM_LB_N,
+    inout  [47:0] SRAM_DATA,
 
 	// reset system due to serial load
     output        MFP_Reset_serialload
@@ -142,7 +151,14 @@ module mfp_ahb_withloader (
         .IO_ABUZ          ( IO_ABUZ         ),
         .IO_3LED          ( IO_3LED         ),
         .IO_VGA_ADDR      ( IO_VGA_ADDR     ),
-        .IO_VGA_DATA      ( IO_VGA_DATA     )
+        .IO_VGA_DATA      ( IO_VGA_DATA     ),
+        .SRAM_ADDR        ( SRAM_ADDR       ),
+        .SRAM_CE_N        ( SRAM_CE_N       ),
+        .SRAM_OE_N        ( SRAM_OE_N       ),
+        .SRAM_WE_N        ( SRAM_WE_N       ),
+        .SRAM_UB_N        ( SRAM_UB_N       ),
+        .SRAM_LB_N        ( SRAM_LB_N       ),
+        .SRAM_DATA        ( SRAM_DATA       )
     );
 
 endmodule

@@ -1,11 +1,12 @@
+// Modified by Jiang Zengkai
+// Date: 2019.4.13
+
 // mfp_sys.v
 //
 // This module is an add-on to the MIPS core, m14k_top. It instantiates // the MIPS core (m14k_top) and an AHB module of memories and I/Os on 
 // the AHB-Lite bus. It also taps out the interface signals and 
 // initializes signals required by the core.
 
-// Modified by Zengkai Jiang
-// Date: 2019.4.9
 
 `include "m14k_const.vh"
 `include "mfp_ahb_const.vh"
@@ -25,10 +26,10 @@ module mfp_sys(
                     input                      EJ_TCK,
                     input                      SI_ColdReset_N,
                     input                      EJ_DINT,
-                    input  [`MFP_N_SW-1 :0]    IO_Switch,
-                    input  [`MFP_N_PB-1 :0]    IO_PB,
-                    output [`MFP_N_LED-1:0]    IO_LED,
-                    output [`MFP_N_7SEG-1:0]   IO_7SEG,
+                    input  [`MFP_N_SW-1    :0] IO_Switch,
+                    input  [`MFP_N_PB-1    :0] IO_PB,
+                    output [`MFP_N_LED-1   :0] IO_LED,
+                    output [`MFP_N_7SEG-1  :0] IO_7SEG,
                     output [`MFP_N_7SEGE-1 :0] IO_7SEGE,
                     output [`MFP_N_ALED-1  :0] IO_ALED,
                     output [`MFP_N_A7SEG-1 :0] IO_A7SEG,
@@ -37,7 +38,14 @@ module mfp_sys(
                     output [`MFP_N_3LED-1  :0] IO_3LED,
                     input                      UART_RX,
                     input  [18             :0] IO_VGA_ADDR,
-                    output [11             :0] IO_VGA_DATA);
+                    output [11             :0] IO_VGA_DATA,
+                    output [19             :0] SRAM_ADDR,
+                    output [2              :0] SRAM_CE_N,
+                    output [2              :0] SRAM_OE_N,
+                    output [2              :0] SRAM_WE_N,
+                    output [2              :0] SRAM_UB_N,
+                    output [2              :0] SRAM_LB_N,
+                    inout  [47             :0] SRAM_DATA);
 
 
 
@@ -322,6 +330,13 @@ module mfp_sys(
         .UART_RX                (   UART_RX                 ),
         .IO_VGA_ADDR            (   IO_VGA_ADDR             ),
         .IO_VGA_DATA            (   IO_VGA_DATA             ),
+        .SRAM_ADDR              (   SRAM_ADDR               ),
+        .SRAM_CE_N              (   SRAM_CE_N               ),
+        .SRAM_OE_N              (   SRAM_OE_N               ),
+        .SRAM_WE_N              (   SRAM_WE_N               ),
+        .SRAM_UB_N              (   SRAM_UB_N               ),
+        .SRAM_LB_N              (   SRAM_LB_N               ),
+        .SRAM_DATA              (   SRAM_DATA               ),
         .MFP_Reset_serialload   (   MFP_Reset_serialload    )
     );
 
