@@ -1,10 +1,6 @@
 // Author: Jiang Zengkai
 // Date: 2019.4.9
 
-//
-// This program exercises MIPSfpga's interrupts
-//
-
 #include "mfp_io.h"
 #include <mips/cpu.h>
 #include <mips/m32c0.h>
