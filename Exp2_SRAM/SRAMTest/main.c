@@ -1,5 +1,5 @@
 // Author: Jiang Zengkai
-// Date: 2019.4.14
+// Date: 2019.4.17
 
 #include "mfp_io.h"
 #include <mips/cpu.h>
@@ -51,12 +51,12 @@ int main() {
             for (j = 0; j < 320; j++) {
                 MFP_SRAM[i * 640 + j] = MFP_VGA[i * 640 + j];
                 MFP_7SEGLED = 0x10000000 | (i * 640 + j);
-                delay();
             }
+        }
+        for (i = 0; i < 480; i++) {
             for (j = 0; j < 320; j++) {
                 MFP_VGA[i * 640 + j] = MFP_SRAM[i * 640 + j];
                 MFP_7SEGLED = 0x20000000 | (i * 640 + j);
-                delay();
             }
         }
     }

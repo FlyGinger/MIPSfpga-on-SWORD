@@ -1,5 +1,5 @@
 // Author: Jiang Zengkai
-// Date: 2019.4.9
+// Date: 2019.4.17
 
 `include "mfp_ahb_const.vh"
 
@@ -35,7 +35,7 @@ module mfp_ahb_v_ram(
 
     // VRAM
     blk_mem_gen_0 vram(
-        .addra(HADDR),
+        .addra(we ? HADDR_d : HADDR),
         .clka(HCLK),
         .dina(HWDATA),
         .douta(HRDATA),
