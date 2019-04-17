@@ -69,13 +69,13 @@ next_tlb_entry:
         add     v1, -1
 
 add_sram_to_tlb:
-        li      v1, 0x001ff800
-        mtc0    v1, C0_PAGEMASK         # page size: 1 MB
+        li      v1, 0x1ffff800
+        mtc0    v1, C0_PAGEMASK         # page size: 256 MB
         li      v1, 1
         mtc0    v1, C0_WIRED            # protect the first entry
-        li      v1, 0x00008007
+        li      v1, 0x00800017
         mtc0    v1, C0_ENTRYLO0         # 0x20000000, global
-        li      v1, 0x00008047
+        li      v1, 0x00800017
         mtc0    v1, C0_ENTRYLO1         # 0x20100000, global
         mtc0    zero, C0_INDEX
         mtc0    zero, C0_ENTRYHI
