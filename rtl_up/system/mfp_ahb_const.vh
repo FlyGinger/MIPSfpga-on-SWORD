@@ -67,7 +67,7 @@
 `define H_RAM_ADDR_Match 		(4'b0000)
 `define H_LED_ADDR_Match		(10'b0001_1111_10)
 `define H_RAM_V_ADDR_Match      (10'b0001_1111_01)
-`define H_SRAM_ADDR_Match       (4'b0010)
+`define H_SRAM_ADDR_Match       (10'b0001_1111_00)
 
 //---------------------------------------------------
 // AHB-Lite values used by MIPSfpga core
