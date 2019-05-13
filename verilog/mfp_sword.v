@@ -71,7 +71,7 @@ module mfp_sword(
     wire [15:0] LED;
     p2s led(
         .clk(clk_out),
-        .sync(clk[10]),
+        .sync(clk[20]),
         .data(LED),
         .sclk(LED_CLK),
         .sclr(LED_CLR),
@@ -93,7 +93,7 @@ module mfp_sword(
     wire [31:0] SEG7E;
     p2s#(.WIDTH(64)) seg7led(
         .clk(clk_out),
-        .sync(clk[10]),
+        .sync(clk[20]),
         .data({SEG7E, SEG7}),
         .sclk(SEG_CLK),
         .sclr(SEG_CLR),

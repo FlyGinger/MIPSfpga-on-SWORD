@@ -39,8 +39,8 @@ set_property -dict {PACKAGE_PIN AF10 IOSTANDARD LVCMOS15} [get_ports {SW[15]}]
 # LEDs
 set_property -dict {PACKAGE_PIN N26 IOSTANDARD LVCMOS33} [get_ports LED_CLK]
 set_property -dict {PACKAGE_PIN M26 IOSTANDARD LVCMOS33} [get_ports LED_DAT]
-set_property -dict {PACKAGE_PIN N24 IOSTANDARD LVCMOS33} [get_ports LED_EN]
-set_property -dict {PACKAGE_PIN R25 IOSTANDARD LVCMOS33} [get_ports LED_CLR]
+set_property -dict {PACKAGE_PIN N24 IOSTANDARD LVCMOS33} [get_ports LED_CLR]
+set_property -dict {PACKAGE_PIN R25 IOSTANDARD LVCMOS33} [get_ports LED_EN]
 
 # 7-segment LEDs
 set_property -dict {PACKAGE_PIN M24 IOSTANDARD LVCMOS33} [get_ports SEG_CLK]

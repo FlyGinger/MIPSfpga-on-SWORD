@@ -25,12 +25,12 @@ module p2s#(
     localparam LOAD = 2'b11;
 
     // buffer
-    reg [WIDTH:0] buffer = {(WIDTH+1){1'b1}};
+    reg [WIDTH:0] buffer = {1'b1, {WIDTH{1'b1}}};
     wire finish = &buffer[WIDTH-1:0];
     always @ (posedge clk) begin
         case (state)
             HOLD: buffer <= buffer;
-            SHIFT: buffer <= {buffer[WIDTH-1:0], 1'b0};
+            SHIFT: buffer <= {buffer[WIDTH-1:0], 1'b1};
             LOAD: buffer <= {data, 1'b0};
             default: buffer <= buffer;
         endcase
@@ -38,9 +38,9 @@ module p2s#(
 
     // state control
     always @ * begin
-        if (start & finish) begin  sen <= 0; state <= LOAD;  end
-        else if (!finish)    begin  sen <= 0; state <= SHIFT; end
-        else                 begin  sen <= 1; state <= HOLD;  end
+        if (start & finish) begin sen <= 0; state <= LOAD; end
+        else if (!finish)   begin sen <= 0; state <= SHIFT; end
+        else                begin sen <= 1; state <= HOLD; end
     end
 
     // output
@@ -49,3 +49,4 @@ module p2s#(
     assign sclr = 1;
 
 endmodule
+
