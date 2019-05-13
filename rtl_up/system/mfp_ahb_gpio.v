@@ -26,10 +26,8 @@ module mfp_ahb_gpio(
     output reg [`MFP_N_7SEGE-1 :0] IO_7SEGE,
     output reg [`MFP_N_ALED-1  :0] IO_ALED,
     output reg [`MFP_N_A7SEG-1 :0] IO_A7SEG,
-    output reg [`MFP_N_A7SEGE-1:0] IO_A7SEGE,
     output reg [`MFP_N_ABUZ-1  :0] IO_ABUZ,
-    output reg [`MFP_N_3LED-1  :0] IO_3LED,
-    input      [`MFP_N_MILLIS-1:0] IO_MILLIS
+    output reg [`MFP_N_3LED-1  :0] IO_3LED
 );
 
   reg  [3:0]  HADDR_d;
@@ -58,7 +56,6 @@ module mfp_ahb_gpio(
          IO_7SEGE <= `MFP_N_7SEGE'b0;
          IO_ALED <= `MFP_N_ALED'b0;
          IO_A7SEG <= `MFP_N_A7SEG'b0;
-         IO_A7SEGE <= `MFP_N_A7SEGE'b0;
          IO_ABUZ <= `MFP_N_ABUZ'b0;
          IO_3LED <= `MFP_N_3LED'b0;
        end else if (we)
@@ -68,7 +65,6 @@ module mfp_ahb_gpio(
            `H_7SEGE_IONUM: IO_7SEGE <= HWDATA[`MFP_N_7SEGE-1:0];
            `H_ALED_IONUM: IO_ALED <= HWDATA[`MFP_N_ALED-1:0];
            `H_A7SEG_IONUM: IO_A7SEG <= HWDATA[`MFP_N_A7SEG-1:0];
-           `H_A7SEGE_IONUM: IO_A7SEGE <= HWDATA[`MFP_N_A7SEGE-1:0];
            `H_ABUZ_IONUM: IO_ABUZ <= HWDATA[`MFP_N_ABUZ-1:0];
            `H_3LED_IONUM: IO_3LED <= HWDATA[`MFP_N_3LED-1:0];
          endcase
@@ -86,10 +82,8 @@ module mfp_ahb_gpio(
            `H_7SEGE_IONUM: HRDATA <= { {32 - `MFP_N_7SEGE {1'b0}}, IO_7SEGE };
            `H_ALED_IONUM: HRDATA <= { {32 - `MFP_N_ALED {1'b0}}, IO_ALED };
            `H_A7SEG_IONUM: HRDATA <= { {32 - `MFP_N_A7SEG {1'b0}}, IO_A7SEG };
-           `H_A7SEGE_IONUM: HRDATA <= { {32 - `MFP_N_A7SEGE {1'b0}}, IO_A7SEGE };
            `H_ABUZ_IONUM: HRDATA <= { {32 - `MFP_N_ABUZ {1'b0}}, IO_ABUZ };
            `H_3LED_IONUM: HRDATA <= { {32 - `MFP_N_3LED {1'b0}}, IO_3LED };
-           `H_MILLIS_IONUM: HRDATA <= { {32 - `MFP_N_MILLIS {1'b0}}, IO_MILLIS };
          endcase
 		 
 endmodule

@@ -1,5 +1,5 @@
 // Modified by Jiang Zengkai
-// Date: 2019.4.13
+// Date: 2019.5.13
 
 // mfp_ahb.v
 // 
@@ -39,7 +39,6 @@ module mfp_ahb
     output     [`MFP_N_7SEGE-1 :0] IO_7SEGE,
     output     [`MFP_N_ALED-1  :0] IO_ALED,
     output     [`MFP_N_A7SEG-1 :0] IO_A7SEG,
-    output     [`MFP_N_A7SEGE-1:0] IO_A7SEGE,
     output     [`MFP_N_ABUZ-1  :0] IO_ABUZ,
     output     [`MFP_N_3LED-1  :0] IO_3LED,
     input      [18             :0] IO_VGA_ADDR,
@@ -54,11 +53,6 @@ module mfp_ahb
     output     [2              :0] SRAM_LB_N,
     inout      [47             :0] SRAM_DATA
 );
-
-  // millisecond counter
-  wire [31:0] millis;
-  mfp_ahb_millis_counter mfp_ahb_millis_counter(
-    .clk(HCLK), .rstn(HRESETn), .millis(millis));
 
   wire [31:0] HRDATA2, HRDATA1, HRDATA0;
   wire [11:0] HRDATA3;
@@ -82,7 +76,7 @@ module mfp_ahb
   // Module 2 - GPIO
   mfp_ahb_gpio mfp_ahb_gpio(HCLK, HRESETn, HADDR[5:2], HTRANS, HWDATA, HWRITE, HSEL[2], 
                             HRDATA2, IO_Switch, IO_PB, IO_LED, IO_7SEG, IO_7SEGE,
-                            IO_ALED, IO_A7SEG, IO_A7SEGE, IO_ABUZ, IO_3LED, millis);
+                            IO_ALED, IO_A7SEG, IO_ABUZ, IO_3LED);
   
   // Module 3 - VRAM
   mfp_ahb_v_ram mfp_ahb_v_ram(HCLK, HRESETn, HADDR[20:2], HTRANS, HWDATA[11:0], HWRITE, HSEL[3], 
@@ -134,28 +128,4 @@ module ahb_mux
           5'b10000: HRDATA = HRDATA4;
 	      default: HRDATA = HRDATA1;
       endcase
-endmodule
-
-module mfp_ahb_millis_counter(
-    input wire clk,
-    input wire rstn,
-    output reg [31:0] millis);
-    
-    reg [13:0] counter;
-    always @ (posedge clk) begin
-        if (~rstn) begin
-            counter <= 0;
-            millis <= 0;
-        end
-        else begin
-            if (counter == 'd12500) begin
-                counter <= 0;
-                millis <= millis + 1;
-            end
-            else begin
-                counter <= counter + 1;
-            end
-        end
-    end
-
 endmodule

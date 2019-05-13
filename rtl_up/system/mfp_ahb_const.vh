@@ -33,10 +33,8 @@
 `define H_7SEGE_ADDR            (32'h1f800010)
 `define H_ALED_ADDR             (32'h1f800014)
 `define H_A7SEG_ADDR            (32'h1f800018)
-`define H_A7SEGE_ADDR           (32'h1f80001c)
-`define H_ABUZ_ADDR             (32'h1f800020)
-`define H_3LED_ADDR             (32'h1f800024)
-`define H_MILLIS_ADDR           (32'h1f800034)
+`define H_ABUZ_ADDR             (32'h1f80001C)
+`define H_3LED_ADDR             (32'h1f800020)
 
 `define H_LED_IONUM   			(4'h0)
 `define H_SW_IONUM  			(4'h1)
@@ -45,10 +43,8 @@
 `define H_7SEGE_IONUM           (4'h4)
 `define H_ALED_IONUM            (4'h5)
 `define H_A7SEG_IONUM           (4'h6)
-`define H_A7SEGE_IONUM          (4'h7)
-`define H_ABUZ_IONUM            (4'h8)
-`define H_3LED_IONUM            (4'h9)
-`define H_MILLIS_IONUM          (4'hd)
+`define H_ABUZ_IONUM            (4'h7)
+`define H_3LED_IONUM            (4'h8)
 
 //---------------------------------------------------
 // RAM addresses
@@ -67,7 +63,7 @@
 `define H_RAM_ADDR_Match 		(4'b0000)
 `define H_LED_ADDR_Match		(10'b0001_1111_10)
 `define H_RAM_V_ADDR_Match      (10'b0001_1111_01)
-`define H_SRAM_ADDR_Match       (10'b0001_1111_00)
+`define H_SRAM_ADDR_Match       (4'b0010)
 
 //---------------------------------------------------
 // AHB-Lite values used by MIPSfpga core

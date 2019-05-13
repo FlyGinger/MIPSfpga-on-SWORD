@@ -91,25 +91,23 @@ module mfp_sword(
     // 7-segment LEDs
     wire [31:0] SEG7;
     wire [31:0] SEG7E;
-    io_7seg seg7led(
+    p2s#(.WIDTH(64)) seg7led(
         .clk(clk_out),
-        .flash(clk[25]),
         .sync(clk[10]),
         .data({SEG7E, SEG7}),
-        .seg_clk(SEG_CLK),
-        .seg_clr(SEG_CLR),
-        .seg_dat(SEG_DAT),
-        .seg_en(SEG_EN));
+        .sclk(SEG_CLK),
+        .sclr(SEG_CLR),
+        .sout(SEG_DAT),
+        .sen(SEG_EN));
     
 
     // 7-segment LEDs on Arduino board
-    wire [15:0] A7SEGE;
     wire [15:0] A7SEG;
     io_a7seg arduino_seg7led(
         .clk(clk_out),
         .flash(clk[25]),
         .scan(clk[19:18]),
-        .data({A7SEGE, A7SEG}),
+        .data(A7SEG),
         .an(AN),
         .seg(SEG));
 
@@ -170,7 +168,6 @@ module mfp_sword(
         .IO_7SEGE(SEG7E),
         .IO_ALED(ALED),
         .IO_A7SEG(A7SEG),
-        .IO_A7SEGE(A7SEGE),
         .IO_ABUZ(BUZZER),
         .IO_3LED(LED3_REV),
         .UART_RX(UART_TXD_IN),
