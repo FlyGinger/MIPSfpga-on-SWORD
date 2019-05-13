@@ -59,6 +59,9 @@ module io_pb(
                 default: btn <= 25'b0;
             endcase
         end
+        else begin
+            btn <= btn;
+        end
     end
 
 endmodule

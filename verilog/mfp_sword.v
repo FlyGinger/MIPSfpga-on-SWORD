@@ -102,7 +102,7 @@ module mfp_sword(
     
 
     // 7-segment LEDs on Arduino board
-    wire [15:0] A7SEG;
+    wire [31:0] A7SEG;
     io_a7seg arduino_seg7led(
         .clk(clk_out),
         .flash(clk[25]),

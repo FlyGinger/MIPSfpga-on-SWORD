@@ -31,14 +31,14 @@ module p2s#(
         case (state)
             HOLD: buffer <= buffer;
             SHIFT: buffer <= {buffer[WIDTH-1:0], 1'b0};
-            LOAD: buffer <= {data, 1'b0} 
+            LOAD: buffer <= {data, 1'b0};
             default: buffer <= buffer;
         endcase
     end
 
     // state control
     always @ * begin
-        if (start && finish) begin  sen <= 0; state <= LOAD;  end
+        if (start & finish) begin  sen <= 0; state <= LOAD;  end
         else if (!finish)    begin  sen <= 0; state <= SHIFT; end
         else                 begin  sen <= 1; state <= HOLD;  end
     end

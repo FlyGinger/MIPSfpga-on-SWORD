@@ -16,12 +16,9 @@
 `define MFP_N_7SEG            32
 `define MFP_N_7SEGE           32
 `define MFP_N_ALED            8
-`define MFP_N_A7SEG           16
-`define MFP_N_A7SEGE          16
+`define MFP_N_A7SEG           32
 `define MFP_N_ABUZ            32
 `define MFP_N_3LED            6
-
-`define MFP_N_MILLIS          32
 
 //---------------------------------------------------
 // Memory-mapped I/O addresses
