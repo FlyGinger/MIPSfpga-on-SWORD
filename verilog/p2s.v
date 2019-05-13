@@ -25,7 +25,7 @@ module p2s#(
     localparam LOAD = 2'b11;
 
     // buffer
-    reg [WIDTH:0] buffer;
+    reg [WIDTH:0] buffer = {(WIDTH+1){1'b1}};
     wire finish = &buffer[WIDTH-1:0];
     always @ (posedge clk) begin
         case (state)
