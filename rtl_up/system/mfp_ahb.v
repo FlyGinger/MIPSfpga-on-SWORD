@@ -104,7 +104,7 @@ module ahb_decoder
   assign HSEL[1] = (HADDR[31:28] == `H_RAM_ADDR_Match);       // 256 KB RAM at 0x80000000 (physical: 0x00000000)
   assign HSEL[2] = (HADDR[31:22] == `H_LED_ADDR_Match);       // GPIO at 0xbf800000 (physical: 0x1f800000)
   assign HSEL[3] = (HADDR[31:22] == `H_RAM_V_ADDR_Match);     // VRAM at 0xbf400000 (physical: 0x1f400000)
-  assign HSEL[4] = (HADDR[31:22] == `H_SRAM_ADDR_Match);      // SRAM at physical 0x1f000000
+  assign HSEL[4] = (HADDR[31:28] == `H_SRAM_ADDR_Match);      // SRAM at physical 0x20000000
 
 endmodule
 
