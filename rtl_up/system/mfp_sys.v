@@ -1,9 +1,10 @@
 // Modified by Jiang Zengkai
-// Date: 2019.4.13
+// Date: 2019.5.13
 
 // mfp_sys.v
 //
-// This module is an add-on to the MIPS core, m14k_top. It instantiates // the MIPS core (m14k_top) and an AHB module of memories and I/Os on 
+// This module is an add-on to the MIPS core, m14k_top. It instantiates
+// the MIPS core (m14k_top) and an AHB module of memories and I/Os on 
 // the AHB-Lite bus. It also taps out the interface signals and 
 // initializes signals required by the core.
 

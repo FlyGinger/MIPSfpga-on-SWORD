@@ -1,6 +1,3 @@
-# Modified by Jiang Zengkai
-# Date: 2019.4.14
-
 // This boot code is derived from https://github.com/sergev/LiteBSD/blob/master/sys/mips/pic32/locore.s
 
 // Place all code in the .reset section
@@ -44,44 +41,19 @@ init_cp0:
         //
 init_tlb:
         # Determine if we have a TLB
-        mfc0    v1, C0_CONFIG           # read Config
-        ext     v1, v1, 7, 3            # extract MT field
-        li      a3, 0x1                 # load a 1 to check against
-        bne     v1, a3, init_icache
+        li      v0, 0x0080001f
+        mtc0    v0, C0_ENTRYLO0         # clear EntryLo0
+        mtc0    v0, C0_ENTRYLO1         # clear EntryLo1
 
-        # Config1MMUSize == Number of TLB entries - 1
-        mfc0    v0, C0_CONFIG1          # Config1
-        ext     v1, v0, 25, 6           # extract MMU Size
-        mtc0    zero, C0_ENTRYLO0       # clear EntryLo0
-        mtc0    zero, C0_ENTRYLO1       # clear EntryLo1
-        mtc0    zero, C0_PAGEMASK       # clear PageMask
-        mtc0    zero, C0_WIRED          # clear Wired
-        li      a0, 0x80000000
+        li      v0, 0x1ffff800
+        mtc0    v0, C0_PAGEMASK         # clear PageMask
+        li      v0, 1
+        mtc0    v0, C0_WIRED            # clear Wired
 
-next_tlb_entry:
-        mtc0    v1, C0_INDEX            # write Index
-        mtc0    a0, C0_ENTRYHI          # write EntryHi
+        mtc0    zero, C0_INDEX          # write Index
+        mtc0    zero, C0_ENTRYHI        # write EntryHi
         ehb
         tlbwi
-        add     a0, 2 << 13             # Add 8K to the address to avoid TLB conflict with previous entry
-
-        bne     v1, zero, next_tlb_entry
-        add     v1, -1
-
-add_sram_to_tlb:
-        li      v1, 0x1ffff800
-        mtc0    v1, C0_PAGEMASK         # page size: 256 MB
-        li      v1, 1
-        mtc0    v1, C0_WIRED            # protect the first entry
-        li      v1, 0x00800017
-        mtc0    v1, C0_ENTRYLO0         # 0x20000000, global
-        li      v1, 0x00800017
-        mtc0    v1, C0_ENTRYLO1         # 0x20100000, global
-        mtc0    zero, C0_INDEX
-        mtc0    zero, C0_ENTRYHI
-        ehb
-        tlbwi
-        nop
 
         //
         // Clear L1 instruction cache.

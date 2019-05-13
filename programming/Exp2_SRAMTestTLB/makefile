@@ -1,5 +1,5 @@
 # Modified by Jiang Zengkai
-# Date: 2019.3.29
+# Date: 2019.5.13
 
 # microAptiv_UP makefile for MIPSfpga
 
@@ -81,7 +81,8 @@ dummy.S
 crt0.o : CFLAGS += -D_BOOTCODE
 
 CSOURCES= \
-main.c
+main.c \
+seg7led.c
 
 COBJECTS = $(CSOURCES:.c=.o)
 CASMS    = $(CSOURCES:.c=.s)
@@ -108,9 +109,11 @@ program.elf : $(AOBJECTS) $(COBJECTS)
 
 clean:
 	$(RM) -f main.s
+	$(RM) -f seg7led.s
 	$(RM) -f *.o
 	$(RM) -f program.elf
 	$(RM) -f program.map
 	$(RM) -f program.dis
 	$(RM) -f program.rec
 	$(RM) -f *.txt
+	$(RM) -f *.bat

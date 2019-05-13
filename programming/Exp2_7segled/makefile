@@ -1,5 +1,5 @@
 # Modified by Jiang Zengkai
-# Date: 2019.3.29
+# Date: 2019.5.13
 
 # microAptiv_UP makefile for MIPSfpga
 
@@ -109,6 +109,7 @@ program.elf : $(AOBJECTS) $(COBJECTS)
 
 clean:
 	$(RM) -f main.s
+	$(RM) -f seg7led.s
 	$(RM) -f *.o
 	$(RM) -f program.elf
 	$(RM) -f program.map
