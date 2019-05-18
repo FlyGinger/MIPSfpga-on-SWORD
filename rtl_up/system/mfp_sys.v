@@ -36,6 +36,7 @@ module mfp_sys(
                     output [`MFP_N_A7SEG-1 :0] IO_A7SEG,
                     output [`MFP_N_ABUZ-1  :0] IO_ABUZ,
                     output [`MFP_N_3LED-1  :0] IO_3LED,
+                    input                      CLK_SD,
                     input                      UART_RX,
                     input  [18             :0] IO_VGA_ADDR,
                     output [11             :0] IO_VGA_DATA,
@@ -45,7 +46,13 @@ module mfp_sys(
                     output [2              :0] SRAM_WE_N,
                     output [2              :0] SRAM_UB_N,
                     output [2              :0] SRAM_LB_N,
-                    inout  [47             :0] SRAM_DATA);
+                    inout  [47             :0] SRAM_DATA,
+                    output                     sd_int,
+                    inout  [3              :0] sd_dat,
+                    inout                      sd_cmd,
+                    output                     sd_clk,
+                    output                     sd_rst,
+                    input                      sd_cd);
 
 
 
@@ -329,6 +336,7 @@ module mfp_sys(
         .UART_RX                (   UART_RX                 ),
         .IO_VGA_ADDR            (   IO_VGA_ADDR             ),
         .IO_VGA_DATA            (   IO_VGA_DATA             ),
+        .CLK_SD                 (   CLK_SD                  ),
         .SRAM_ADDR              (   SRAM_ADDR               ),
         .SRAM_CE_N              (   SRAM_CE_N               ),
         .SRAM_OE_N              (   SRAM_OE_N               ),
@@ -336,6 +344,12 @@ module mfp_sys(
         .SRAM_UB_N              (   SRAM_UB_N               ),
         .SRAM_LB_N              (   SRAM_LB_N               ),
         .SRAM_DATA              (   SRAM_DATA               ),
+        .sd_int                 (   sd_int                  ),
+        .sd_dat                 (   sd_dat                  ),
+        .sd_cmd                 (   sd_cmd                  ),
+        .sd_clk                 (   sd_clk                  ),
+        .sd_rst                 (   sd_rst                  ),
+        .sd_cd                  (   sd_cd                   ),
         .MFP_Reset_serialload   (   MFP_Reset_serialload    )
     );
 
@@ -355,9 +369,9 @@ module mfp_sys(
     assign SI_EICPresent = 0;
     assign SI_EICVector = 0;
     assign SI_EISS = 0;
-	assign SI_Int = IO_Switch[0] ? {6'b0, SI_TimerInt, |IO_PB} : 8'b0;  // Ext. Interrupt pins
+	assign SI_Int = {5'b0, sd_int, SI_TimerInt, |IO_PB};  // Ext. Interrupt pins
 	assign SI_Offset = 0;
-	assign SI_IPTI = IO_Switch[0] ? 'd3 : 0;	 // TimerInt connection
+	assign SI_IPTI = 'd3;	 // TimerInt connection
 	assign SI_CPUNum = 0;	         // EBase CPU number
 	assign SI_Endian = 0;	         // Base endianess: 1=big
 	assign SI_MergeMode = 0;	

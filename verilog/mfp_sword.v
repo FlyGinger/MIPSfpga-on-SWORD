@@ -49,7 +49,13 @@ module mfp_sword(
     output [2:0] SRAM_WE_N,
     output [2:0] SRAM_UB_N,
     output [2:0] SRAM_LB_N,
-    inout [47:0] SRAM_DATA);
+    inout [47:0] SRAM_DATA,
+    // SD card
+    inout [3:0] SD_DAT,
+    inout SD_CMD,
+    output SD_CLK,
+    output SD_RST,
+    input SD_CD);
     
     
     // Clock and reset
@@ -173,13 +179,20 @@ module mfp_sword(
         .UART_RX(UART_TXD_IN),
         .IO_VGA_ADDR(vga_addr),
         .IO_VGA_DATA(RGB),
+        .CLK_SD(clk_out),
         .SRAM_ADDR(SRAM_ADDR),
         .SRAM_CE_N(SRAM_CE_N),
         .SRAM_OE_N(SRAM_OE_N),
         .SRAM_WE_N(SRAM_WE_N),
         .SRAM_UB_N(SRAM_UB_N),
         .SRAM_LB_N(SRAM_LB_N),
-        .SRAM_DATA(SRAM_DATA));
+        .SRAM_DATA(SRAM_DATA),
+        .sd_dat(SD_DAT),
+        .sd_cmd(SD_CMD),
+        .sd_clk(SD_CLK),
+        .sd_rst(SD_RST),
+        .sd_cd(SD_CD),
+        .sd_int());
 
 
 endmodule

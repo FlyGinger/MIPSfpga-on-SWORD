@@ -43,6 +43,7 @@ module mfp_ahb
     output     [`MFP_N_3LED-1  :0] IO_3LED,
     input      [18             :0] IO_VGA_ADDR,
     output     [11             :0] IO_VGA_DATA,
+    input                          CLK_SD,
 
 // SRAM
     output     [19             :0] SRAM_ADDR,
@@ -51,14 +52,23 @@ module mfp_ahb
     output     [2              :0] SRAM_WE_N,
     output     [2              :0] SRAM_UB_N,
     output     [2              :0] SRAM_LB_N,
-    inout      [47             :0] SRAM_DATA
+    inout      [47             :0] SRAM_DATA,
+    
+    // SD
+    output          sd_int,
+    inout   [3:0]   sd_dat,
+    inout           sd_cmd,
+    output          sd_clk,
+    output          sd_rst,
+    input           sd_cd 
 );
 
   wire [31:0] HRDATA2, HRDATA1, HRDATA0;
   wire [11:0] HRDATA3;
   wire [31:0] HRDATA4;
-  wire [ 4:0] HSEL;
-  reg  [ 4:0] HSEL_d;
+  wire [31:0] HRDATA5;
+  wire [ 5:0] HSEL;
+  reg  [ 5:0] HSEL_d;
 
   assign HREADY = 1;
   assign HRESP = 0;
@@ -86,9 +96,15 @@ module mfp_ahb
   mfp_ahb_sram mfp_ahb_sram(HCLK, HRESETn, HADDR, HBURST, HMASTLOCK, HPROT, HSIZE,
                               HTRANS, HWDATA, HWRITE, HRDATA4, HSEL[4], SRAM_DATA,
                               SRAM_ADDR, SRAM_CE_N, SRAM_WE_N, SRAM_OE_N, SRAM_UB_N, SRAM_LB_N);
+                              
+  // Module 5 - SD card
+  SDWrapper mfp_ahb_sd(.clkCPU(HCLK), .clkSD(CLK_SD), .globlRst(~HRESETn), .HTRANS(HTRANS),
+          .HBURST(HBURST), .HSIZE(HSIZE), .HWRITE(HWRITE),
+          .dataInBus(HWDATA), .HADDR(HADDR), .HSEL(HSEL[5]), .dataOut(HRDATA5), .sd_int(sd_int),
+          .sd_dat(sd_dat), .sd_cmd(sd_cmd), .sd_clk(sd_clk), .sd_rst(sd_rst), .sd_cd(sd_cd));
   
   ahb_decoder ahb_decoder(HADDR, HSEL);
-  ahb_mux ahb_mux(HCLK, HSEL_d, HRDATA4, HRDATA3, HRDATA2, HRDATA1, HRDATA0, HRDATA);
+  ahb_mux ahb_mux(HCLK, HSEL_d, HRDATA5, HRDATA4, HRDATA3, HRDATA2, HRDATA1, HRDATA0, HRDATA);
 
 endmodule
 
@@ -96,7 +112,7 @@ endmodule
 module ahb_decoder
 (
     input  [31:0] HADDR,
-    output [ 4:0] HSEL
+    output [ 5:0] HSEL
 );
 
   // Decode based on most significant bits of the address
@@ -105,6 +121,7 @@ module ahb_decoder
   assign HSEL[2] = (HADDR[31:22] == `H_LED_ADDR_Match);       // GPIO at 0xbf800000 (physical: 0x1f800000)
   assign HSEL[3] = (HADDR[31:22] == `H_RAM_V_ADDR_Match);     // VRAM at 0xbf400000 (physical: 0x1f400000)
   assign HSEL[4] = (HADDR[31:28] == `H_SRAM_ADDR_Match);      // SRAM at physical 0x20000000
+  assign HSEL[5] = (HADDR[31:22] == `H_SD_ADDR_Match);        // SD card at physical 0x1f000000
 
 endmodule
 
@@ -112,7 +129,8 @@ endmodule
 module ahb_mux
 (
     input             HCLK,
-    input      [ 4:0] HSEL,
+    input      [ 5:0] HSEL,
+    input      [31:0] HRDATA5,
     input      [31:0] HRDATA4,
     input      [11:0] HRDATA3,
     input      [31:0] HRDATA2, HRDATA1, HRDATA0,
@@ -121,11 +139,12 @@ module ahb_mux
 
     always @(*)
       casez (HSEL)
-	      5'b????1: HRDATA = HRDATA0;
-	      5'b???10: HRDATA = HRDATA1;
-	      5'b??100: HRDATA = HRDATA2;
-	      5'b?1000: HRDATA = {20'b0, HRDATA3};
-          5'b10000: HRDATA = HRDATA4;
+	      6'b?????1: HRDATA = HRDATA0;
+	      6'b????10: HRDATA = HRDATA1;
+	      6'b???100: HRDATA = HRDATA2;
+	      6'b??1000: HRDATA = {20'b0, HRDATA3};
+          6'b?10000: HRDATA = HRDATA4;
+          6'b100000: HRDATA = HRDATA5;
 	      default: HRDATA = HRDATA1;
       endcase
 endmodule

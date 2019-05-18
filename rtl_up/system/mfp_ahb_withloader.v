@@ -31,6 +31,7 @@ module mfp_ahb_withloader (
     output     [`MFP_N_3LED-1  :0] IO_3LED,
     input      [18             :0] IO_VGA_ADDR,
     output     [11             :0] IO_VGA_DATA,
+    input                          CLK_SD,
     
 	// for serial loading of memory using uart
     input         UART_RX,
@@ -43,6 +44,13 @@ module mfp_ahb_withloader (
     output [2 :0] SRAM_UB_N,
     output [2 :0] SRAM_LB_N,
     inout  [47:0] SRAM_DATA,
+    
+    output          sd_int,
+    inout   [3:0]   sd_dat,
+    inout           sd_cmd,
+    output          sd_clk,
+    output          sd_rst,
+    input           sd_cd,
 
 	// reset system due to serial load
     output        MFP_Reset_serialload
@@ -150,13 +158,20 @@ module mfp_ahb_withloader (
         .IO_3LED          ( IO_3LED         ),
         .IO_VGA_ADDR      ( IO_VGA_ADDR     ),
         .IO_VGA_DATA      ( IO_VGA_DATA     ),
+        .CLK_SD           ( CLK_SD          ),
         .SRAM_ADDR        ( SRAM_ADDR       ),
         .SRAM_CE_N        ( SRAM_CE_N       ),
         .SRAM_OE_N        ( SRAM_OE_N       ),
         .SRAM_WE_N        ( SRAM_WE_N       ),
         .SRAM_UB_N        ( SRAM_UB_N       ),
         .SRAM_LB_N        ( SRAM_LB_N       ),
-        .SRAM_DATA        ( SRAM_DATA       )
+        .SRAM_DATA        ( SRAM_DATA       ),
+        .sd_int           ( sd_int          ),
+        .sd_dat           ( sd_dat          ),
+        .sd_cmd           ( sd_cmd          ),
+        .sd_clk           ( sd_clk          ),
+        .sd_rst           ( sd_rst          ),
+        .sd_cd            ( sd_cd           )
     );
 
 endmodule

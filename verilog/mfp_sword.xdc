@@ -199,3 +199,13 @@ set_property -dict {PACKAGE_PIN P18 IOSTANDARD LVCMOS33 SLEW FAST DRIVE 4} [get_
 set_property -dict {PACKAGE_PIN K26 IOSTANDARD LVCMOS33 SLEW FAST DRIVE 4} [get_ports {SRAM_LB_N[0]}]
 set_property -dict {PACKAGE_PIN M20 IOSTANDARD LVCMOS33 SLEW FAST DRIVE 4} [get_ports {SRAM_LB_N[1]}]
 set_property -dict {PACKAGE_PIN R17 IOSTANDARD LVCMOS33 SLEW FAST DRIVE 4} [get_ports {SRAM_LB_N[2]}]
+
+# SD card
+set_property -dict {PACKAGE_PIN AF23 IOSTANDARD LVCMOS33 SLEW FAST} [get_ports SD_CLK]
+set_property -dict {PACKAGE_PIN AD25 IOSTANDARD LVCMOS33 SLEW FAST PULLUP true} [get_ports SD_CMD]
+set_property -dict {PACKAGE_PIN AE25 IOSTANDARD LVCMOS33 SLEW FAST PULLUP true} [get_ports {SD_DAT[0]}]
+set_property -dict {PACKAGE_PIN AE22 IOSTANDARD LVCMOS33 SLEW FAST PULLUP true} [get_ports {SD_DAT[1]}]
+set_property -dict {PACKAGE_PIN AF22 IOSTANDARD LVCMOS33 SLEW FAST PULLUP true} [get_ports {SD_DAT[2]}]
+set_property -dict {PACKAGE_PIN Y20  IOSTANDARD LVCMOS33 SLEW FAST PULLUP true} [get_ports {SD_DAT[3]}]
+set_property -dict {PACKAGE_PIN AE26 IOSTANDARD LVCMOS33} [get_ports SD_CD]
+set_property -dict {PACKAGE_PIN AE23 IOSTANDARD LVCMOS33} [get_ports SD_RST]
