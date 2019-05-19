@@ -59,15 +59,16 @@ module SDWrapper(
     end
     
     wire [31:0] addrBus = we ? HADDR_d : HADDR;
-    wire en_ctrl = (addrBus[31:12] == 'h1fc01);
-    wire en_data = (addrBus[31:12] == 'h1fc00);
+    wire en_ctrl = 1;
+    wire en_data = 1;
     
     reg [31:0] dataOut_ctrl;
     wire [31:0] dataOut_data;
     always @ * begin
-        if (en_ctrl) dataOut <= dataOut_ctrl;
-        else if (en_data) dataOut <= dataOut_data;
-        else dataOut <= 'h005500aa;
+        case (addrBus[12])
+            1'b0: dataOut <= dataOut_data;
+            1'b1: dataOut <= dataOut_ctrl;
+        endcase
     end
 	// done ----------------------------------------------------
 
