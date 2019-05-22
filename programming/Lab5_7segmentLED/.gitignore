@@ -1,7 +1,0 @@
-*.o
-program.elf
-program.map
-program.dis
-program.rec
-*.txt
-main.s
