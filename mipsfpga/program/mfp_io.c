@@ -250,17 +250,19 @@ void page_down() {
 }
 
 void put_char(char c) {
-    unsigned int *pixel = (unsigned int *)(MFP_VGA_CHAR_ADDR + c * 4 * 4);
-    int i, j, k = 31, l = 0;
-    for (i = vga_cursor_x * 16; i < (vga_cursor_x + 1) * 16; i++) {
-        for (j = vga_cursor_y * 8; j < (vga_cursor_y + 1) * 8; j++) {
+    unsigned int *pixel = (unsigned int *)(MFP_VGA_CHAR_ADDR) + c * 4;
+    int i, j, k = 1;
+    for (i = vga_cursor_x * 16 + 3; i >= vga_cursor_x * 16; i--) {
+        for (j = (vga_cursor_y + 1) * 8 - 1; j >= vga_cursor_y * 8; j--) {
             set_vga_pixel(i * 640 + j,
-                          (pixel[l] >> k) ? vga_foreground : vga_background);
-            k -= 1;
-            if (k == 0) {
-                k = 31;
-                l += 1;
-            }
+                          (pixel[0] & k) ? vga_foreground : vga_background);
+            set_vga_pixel((i + 4) * 640 + j,
+                          (pixel[1] & k) ? vga_foreground : vga_background);
+            set_vga_pixel((i + 8) * 640 + j,
+                          (pixel[2] & k) ? vga_foreground : vga_background);
+            set_vga_pixel((i + 12) * 640 + j,
+                          (pixel[3] & k) ? vga_foreground : vga_background);
+            k <<= 1;
         }
     }
 

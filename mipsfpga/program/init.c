@@ -13,9 +13,9 @@ _mips_general_exception() {
             ; // Loop forever non-interrupt exception detected
     }
     if (cause & CR_HINT0) {
-        set_arduino_seg7led(time++);
-        mips32_setcount(0);
+        set_3leds(time++);
         mips32_setcompare(0x80000);
+        mips32_setcount(0);
     }else if (cause & CR_HINT1) {
         set_seg7led(get_buttons());
         clear_buttons_int();
@@ -35,10 +35,11 @@ int init() {
     set_arduino_seg7led(0);
     set_arduino_buz(0);
     clear_ps2_int();
-
     vga_clear();
 
-    mips32_setcompare(0x80000);
+    mips32_setcompare(0x800000);
+    mips32_setcount(0);
+
     main();
 
     return 0;
