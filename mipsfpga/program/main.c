@@ -12,6 +12,9 @@ int main() {
         put_char(hex2char(buf[i] & 0xf));
         put_char(hex2char(buf[i] >> 4));
     }
+    for (i = 0; i < 16; i++) {
+        put_char(0);
+    }
 
     unsigned int *sram = (unsigned int *)0;
     for (i = 0; i < 1048576; i++) {

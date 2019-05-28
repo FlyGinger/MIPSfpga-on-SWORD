@@ -87,15 +87,15 @@ void set_seg7led_pixel(unsigned int high, unsigned int low) {
 void set_arduino_seg7led_pixel(unsigned int data) { MFP_ARDUINO_SEG = data; }
 
 #define SECSIZE 512
-static volatile unsigned int *const SD_CTRL = (unsigned int *)MFP_SD_CTRL_ADDR;
-static volatile unsigned int *const SD_BUF = (unsigned int *)MFP_SD_BUF_ADDR;
+unsigned int *SD_CTRL = (unsigned int *)MFP_SD_CTRL_ADDR;
+unsigned int *SD_BUF = (unsigned int *)MFP_SD_BUF_ADDR;
 
 static int sd_send_cmd_blocking(int cmd, int argument) {
     // Send cmd
     SD_CTRL[1] = cmd;
     SD_CTRL[0] = argument;
     // Wait for cmd transmission
-    int t = 4096;
+    volatile int t = 4096;
     while (t--)
         ;
 
@@ -236,23 +236,14 @@ void vga_clear() {
 }
 
 void page_down() {
-    int i, j;
-    for (i = 0; i < 464; i++) {
+    int i, j, k;
+    for (i = 0; i < 480; i++) {
         for (j = 0; j < 640; j++) {
-            set_vga_pixel(i * 640 + j, get_vga_pixel((i + 16) * 640 + j));
+            k = (i + 16 >= 480) ? vga_background
+                                : get_vga_pixel((i + 16) * 640 + j);
+            set_vga_pixel(i * 640 + j, k);
         }
     }
-    for (; i < 480; i++) {
-        for (j = 0; j < 640; j++) {
-            set_vga_pixel(i * 640 + j, vga_background);
-        }
-    }
-}
-
-void delay() {
-    volatile int i = 10000000;
-    while (i-- > 0)
-        ;
 }
 
 void put_char(char c) {

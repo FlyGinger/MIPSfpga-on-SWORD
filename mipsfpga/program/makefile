@@ -32,7 +32,7 @@ endif
 LIBFDCPATH="$(MIPS_ELF_ROOT)/share/mips/addons/libfdc/"
 
 
-CFLAGS  = -EL -g -march=m14kc -msoft-float -O1 -I$(LIBFDCPATH)
+CFLAGS  = -EL -g -march=m14kc -msoft-float -O0 -I$(LIBFDCPATH)
 LDFLAGS = -EL -march=m14kc -msoft-float -nostartfiles -Wl,-Map=program.map -L$(LIBFDCPATH)
 
 ifeq ($(TINY_MEMORY),1)
