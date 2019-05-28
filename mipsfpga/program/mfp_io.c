@@ -19,8 +19,8 @@
 
 unsigned int vga_foreground;
 unsigned int vga_background;
-unsigned int vga_cursor_x;
-unsigned int vga_cursor_y;
+unsigned int vga_cursor_x = 0;
+unsigned int vga_cursor_y = 0;
 
 unsigned char get_digit(unsigned char x) {
     switch (x) {
@@ -249,19 +249,32 @@ void page_down() {
     }
 }
 
+void delay() {
+    volatile int i = 10000000;
+    while (i-- > 0)
+        ;
+}
+
 void put_char(char c) {
-    unsigned int *pixel = (unsigned int *)(MFP_VGA_CHAR_ADDR) + c * 4;
-    int i, j, k = 1;
-    for (i = vga_cursor_x * 16 + 3; i >= vga_cursor_x * 16; i--) {
-        for (j = (vga_cursor_y + 1) * 8 - 1; j >= vga_cursor_y * 8; j--) {
+    unsigned int *pixel = (unsigned int *)(MFP_VGA_CHAR_ADDR);
+    int i = 0;
+    int j = 0;
+    int k = 1;
+    int x = vga_cursor_x * 16;
+    int y = vga_cursor_y * 8;
+    for (i = x + 3; i >= x; i--) {
+        for (j = y + 7; j >= y; j--) {
             set_vga_pixel(i * 640 + j,
-                          (pixel[0] & k) ? vga_foreground : vga_background);
-            set_vga_pixel((i + 4) * 640 + j,
-                          (pixel[1] & k) ? vga_foreground : vga_background);
-            set_vga_pixel((i + 8) * 640 + j,
-                          (pixel[2] & k) ? vga_foreground : vga_background);
-            set_vga_pixel((i + 12) * 640 + j,
-                          (pixel[3] & k) ? vga_foreground : vga_background);
+                          (pixel[c * 4] & k) ? vga_foreground : vga_background);
+            set_vga_pixel((i + 4) * 640 + j, (pixel[c * 4 + 1] & k)
+                                                 ? vga_foreground
+                                                 : vga_background);
+            set_vga_pixel((i + 8) * 640 + j, (pixel[c * 4 + 2] & k)
+                                                 ? vga_foreground
+                                                 : vga_background);
+            set_vga_pixel((i + 12) * 640 + j, (pixel[c * 4 + 3] & k)
+                                                  ? vga_foreground
+                                                  : vga_background);
             k <<= 1;
         }
     }
@@ -287,3 +300,13 @@ void vga_set_foreground(unsigned int x) { vga_foreground = x; }
 unsigned int vga_get_foreground() { return vga_foreground; }
 void vga_set_background(unsigned int x) { vga_background = x; }
 unsigned int vga_get_background() { return vga_background; }
+
+unsigned char hex2char(unsigned char h) {
+    if (h >= 0 && h <= 9) {
+        return 48 + h;
+    } else if (h >= 10 && h <= 15) {
+        return 65 + h - 10;
+    } else {
+        return 0;
+    }
+}

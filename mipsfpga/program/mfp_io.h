@@ -67,6 +67,7 @@ void vga_set_foreground(unsigned int x);
 unsigned int vga_get_foreground();
 void vga_set_background(unsigned int x);
 unsigned int vga_get_background();
+unsigned char hex2char(unsigned char h);
 void put_char(char c);
 char keyboard();
 

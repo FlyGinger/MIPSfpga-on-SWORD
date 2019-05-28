@@ -32,13 +32,14 @@ module vram(
     
     // overall write enable signal
     assign we = (HTRANS_d != `HTRANS_IDLE) & HSEL_d & HWRITE_d &
-                ((HADDR_d[31:20] == 'h1f4) | ((HADDR_d[31:20] == 'h1f5)));
+                ((HADDR_d[31:20] == 'h1f4) | (HADDR_d[31:20] == 'h1f5));
     
     wire [11:0] data_vram;
     wire [31:0] data_char;
     wire [7:0] data_acsii;
     always @ (*) begin
         if (HADDR[31:20] == 'h1f4) HRDATA <= data_vram;
+        else if (HADDR[31:20] == 'h1f5) HRDATA <= data_vram;
         else if (HADDR[31:20] == 'h1f6) HRDATA <= data_char;
         else if (HADDR[31:20] == 'h1f7) HRDATA <= data_acsii;
         else HRDATA <= 0;

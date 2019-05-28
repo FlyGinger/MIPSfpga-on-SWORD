@@ -14,9 +14,9 @@ _mips_general_exception() {
     }
     if (cause & CR_HINT0) {
         set_3leds(time++);
-        mips32_setcompare(0x80000);
+        mips32_setcompare(0x800000);
         mips32_setcount(0);
-    }else if (cause & CR_HINT1) {
+    } else if (cause & CR_HINT1) {
         set_seg7led(get_buttons());
         clear_buttons_int();
     } else if (cause & CR_HINT2) {
