@@ -1,6 +1,8 @@
 #include "mfp_io.h"
 
 unsigned int time = 0;
+int sector = 0;
+char buf[512];
 
 void __attribute__((interrupt, keep_interrupts_masked))
 _mips_general_exception() {

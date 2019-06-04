@@ -87,8 +87,8 @@ void set_seg7led_pixel(unsigned int high, unsigned int low) {
 void set_arduino_seg7led_pixel(unsigned int data) { MFP_ARDUINO_SEG = data; }
 
 #define SECSIZE 512
-unsigned int *SD_CTRL = (unsigned int *)MFP_SD_CTRL_ADDR;
-unsigned int *SD_BUF = (unsigned int *)MFP_SD_BUF_ADDR;
+static volatile unsigned int *const SD_CTRL = (unsigned int *)MFP_SD_CTRL_ADDR;
+static volatile unsigned int *const SD_BUF = (unsigned int *)MFP_SD_BUF_ADDR;
 
 static int sd_send_cmd_blocking(int cmd, int argument) {
     // Send cmd
