@@ -70,8 +70,8 @@ module mfp_ahb
 
 
   wire [31:0] HRDATA5, HRDATA4, HRDATA3, HRDATA2, HRDATA1, HRDATA0;
-  wire [ 5:0] HSEL;
-  reg  [ 5:0] HSEL_d;
+  wire [ 6:0] HSEL;
+  reg  [ 6:0] HSEL_d;
 
   assign HREADY = 1;
   assign HRESP = 0;
@@ -118,11 +118,11 @@ module mfp_ahb
   // Module 5 - SD card
   SDWrapper mfp_ahb_sd(.clkCPU(HCLK), .clkSD(IO_CLK), .globlRst(~HRESETn), .HTRANS(HTRANS),
                        .HBURST(HBURST), .HSIZE(HSIZE), .HWRITE(HWRITE),
-                       .dataInBus(HWDATA), .HADDR(HADDR), .HSEL(HSEL[5]), .dataOut(HRDATA5), .sd_int(),
+                       .dataInBus(HWDATA), .HADDR(HADDR), .HSEL(HSEL[6:5]), .dataOut(HRDATA5), .sd_int(),
                        .sd_dat(IO_SD_DAT), .sd_cmd(IO_SD_CMD), .sd_clk(IO_SD_CLK), .sd_rst(IO_SD_RST), .sd_cd(IO_SD_CD));
 
   ahb_decoder ahb_decoder(HADDR, HSEL);
-  ahb_mux ahb_mux(HCLK, HSEL_d, HRDATA5, HRDATA4, HRDATA3, HRDATA2, HRDATA1, HRDATA0, HRDATA);
+  ahb_mux ahb_mux(HCLK, HSEL_d, HRDATA5, HRDATA5, HRDATA4, HRDATA3, HRDATA2, HRDATA1, HRDATA0, HRDATA);
 
 endmodule
 
@@ -130,7 +130,7 @@ endmodule
 module ahb_decoder
 (
     input  [31:0] HADDR,
-    output [ 5:0] HSEL
+    output [ 6:0] HSEL
 );
 
   // Decode based on most significant bits of the address
@@ -139,7 +139,8 @@ module ahb_decoder
   assign HSEL[2] = (HADDR[31:22] == `H_LED_ADDR_Match);       // GPIO at 0xbf800000 (physical: 0x1f800000)
   assign HSEL[3] = (HADDR[31:22] == `H_VRAM_ADDR_Match);      // VRAM at 0xbf400000 (physical: 0x1f400000)
   assign HSEL[4] = (HADDR[31:28] == `H_SRAM_ADDR_Match);      // SRAM at physical 0x20000000
-  assign HSEL[5] = (HADDR[31:22] == `H_SD_ADDR_Match);        // SD card at physical 0x1f000000
+  assign HSEL[5] = (HADDR[31:12] == `H_SD_BUF_ADDR_Match);    // SD card buffer at physical 0x1f000000
+  assign HSEL[6] = (HADDR[31:12] == `H_SD_CTRL_ADDR_Match);   // SD card control registers at physical 0x1f001000
 
 endmodule
 
@@ -147,20 +148,21 @@ endmodule
 module ahb_mux
 (
     input             HCLK,
-    input      [ 5:0] HSEL,
-    input      [31:0] HRDATA5, HRDATA4, HRDATA3, HRDATA2, HRDATA1, HRDATA0,
+    input      [ 6:0] HSEL,
+    input      [31:0] HRDATA6, HRDATA5, HRDATA4, HRDATA3, HRDATA2, HRDATA1, HRDATA0,
     output reg [31:0] HRDATA
 );
 
     always @(*)
       casez (HSEL)
-	      6'b?????1: HRDATA = HRDATA0;
-	      6'b????10: HRDATA = HRDATA1;
-	      6'b???100: HRDATA = HRDATA2;
-          6'b??1000: HRDATA = HRDATA3;
-          6'b?10000: HRDATA = HRDATA4;
-          6'b100000: HRDATA = HRDATA5;
-	      default:   HRDATA = HRDATA1;
+	      7'b??????1: HRDATA = HRDATA0;
+	      7'b?????10: HRDATA = HRDATA1;
+	      7'b????100: HRDATA = HRDATA2;
+          7'b???1000: HRDATA = HRDATA3;
+          7'b??10000: HRDATA = HRDATA4;
+          7'b?100000: HRDATA = HRDATA5;
+          7'b1000000: HRDATA = HRDATA6;
+	      default:    HRDATA = HRDATA1;
       endcase
 
 endmodule

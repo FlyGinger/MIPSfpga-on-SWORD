@@ -2,7 +2,6 @@
 
 module seg7(
     input  wire        clk,
-    input  wire        flash,
     input  wire [1 :0] scan,
     input  wire [31:0] data,
     output reg  [3 :0] an,

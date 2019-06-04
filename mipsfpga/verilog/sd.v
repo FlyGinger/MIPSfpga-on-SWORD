@@ -15,7 +15,7 @@ module SDWrapper(
 	
 	//CPU bus interface
 	input [1:0] HTRANS, input [2:0] HBURST, input [2:0] HSIZE, input HWRITE,
-	input [31:0] dataInBus, input [31:0] HADDR, input HSEL,
+	input [31:0] dataInBus, input [31:0] HADDR, input [1:0] HSEL,
 	output reg [31:0] dataOut,
 	output sd_int,
 	
@@ -30,7 +30,7 @@ module SDWrapper(
     // prepare -------------------------------------------------
     reg [31:0] HADDR_d; // HADDR delay
     reg HWRITE_d; // HWRITE delay
-    reg HSEL_d; // HSEL delay
+    reg [1:0] HSEL_d; // HSEL delay
     reg [1:0] HTRANS_d; // HTRANS delay
     always @ (posedge clkCPU) begin
         HADDR_d  <= HADDR;
@@ -38,7 +38,7 @@ module SDWrapper(
         HSEL_d   <= HSEL;
         HTRANS_d <= HTRANS;
     end
-    wire we = (HTRANS_d != `HTRANS_IDLE) & HSEL_d & HWRITE_d; // write enable
+    wire we = (HTRANS_d != `HTRANS_IDLE) & (|HSEL_d) & HWRITE_d; // write enable
     
     reg [3:0] weBus;
     always @ * begin
@@ -57,15 +57,16 @@ module SDWrapper(
     end
     
     wire [31:0] addrBus = we ? HADDR_d : HADDR;
-    wire en_ctrl = 1;
-    wire en_data = 1;
+    wire en_ctrl = HSEL[1] | HSEL_d[1];
+    wire en_data = HSEL[0] | HSEL_d[0];
     
     reg [31:0] dataOut_ctrl;
     wire [31:0] dataOut_data;
     always @ * begin
-        case (addrBus[12])
-            1'b0: dataOut <= dataOut_data;
-            1'b1: dataOut <= dataOut_ctrl;
+        case (HSEL)
+            2'b01: dataOut <= dataOut_data;
+            2'b10: dataOut <= dataOut_ctrl;
+            default: dataOut <= 0;
         endcase
     end
 	// done ----------------------------------------------------

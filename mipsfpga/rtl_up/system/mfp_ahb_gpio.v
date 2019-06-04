@@ -106,7 +106,7 @@ module mfp_ahb_gpio(
   assign IO_ARDUINO_LED = buf_arduino_led;
 
   // 7-segment LED
-  seg7 mfp_ahb_gpio_seg_arduino(.clk(IO_CLK[0]), .flash(IO_CLK[26]), .scan(IO_CLK[20:19]),
+  seg7 mfp_ahb_gpio_seg_arduino(.clk(IO_CLK[0]), .scan(IO_CLK[20:19]),
                                 .data(buf_arduino_seg), .an(IO_ARDUINO_AN), .seg(IO_ARDUINO_SEG));
   
   // arduino buzzer
